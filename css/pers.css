@@ -1,0 +1,187 @@
+/**
+*
+* CSS für Layer Personendaten
+* 
+*/
+
+div#layer_personal {
+    visibility: hidden;
+    opacity: 0;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+}
+
+div#presetboxT, div#presetboxW, div#zeitbox {
+	width: 515px;
+ 	height: 600px;
+ 	position: absolute;
+ 	top: 0px;
+ 	left: 285px;	
+	visibility: hidden;
+    opacity: 0;
+	}
+
+div#pers_anwahl {
+    height:360px;
+    left:650px;
+    position:absolute;
+    top:175px;
+    width:80px;
+}
+
+.button_persanw {
+    width: 70px;
+	height: 70px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	text-align: center;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	float: left;
+    background-color: #172935;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.preset_data {
+	width: 139px;
+	height: 82px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	text-align: center;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	float: left;
+	background-image: url(../img/presetdata.png);
+    cursor: move;
+	}
+	
+.preset_data_text {
+	font-size: 14px;
+	font-weight: normal;
+	color: #C4CACA;
+	position: relative;
+	top: 38px;
+}
+
+.feld_dragdata {
+    width: 320px;
+ 	height: 500px;
+ 	position: absolute;
+ 	top: 60px;
+ 	left: 80px;
+}
+
+canvas#zeitleiste {
+    position: absolute;
+    top: 1px;
+    left: 30px;
+    cursor: pointer;
+}
+
+img#persbild {
+    position: absolute;
+    top: 70px;
+    left: 285px;
+    opacity: 0.6;
+}
+
+span#p_name {
+    font-family:eurostile extendedtwo,microgrammadmedext,helvetica,arial,sans-serif;
+    font-size:72px;
+    position:absolute;
+    top:493px;
+    right:180px;
+}
+
+div#pers_daten1 {
+    font-size:14px;
+    opacity: 0.7;
+    position:absolute;
+    bottom:120px;
+    right:285px;
+    text-align: right;
+}
+
+div#pers_daten2 {
+    font-size:14px;
+    opacity: 0.7;
+    position:absolute;
+    bottom:120px;
+    right:180px;
+    text-align: left;
+}
+
+div#tasterfeld_pers {
+    position:absolute;
+    top:22px;
+    left:306px;
+    width:430px;
+}
+
+div#tasterfeld_zeiteinst {
+    position: absolute;
+	top: 370px;
+	left: 71px;
+    width: 340px;
+}
+
+div#tasterfeld_zeitfunkt {
+    position:absolute;
+    top:55px;
+    left:71px;
+    width: 340px;
+}
+
+ul#zeiteinst_datum {
+    font-size:14px;
+    position: absolute;
+    left: 87px;
+    top: 330px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul#zeiteinst_datum li {
+    float: left;
+    margin-right: 3px;
+}
+
+span#schaltpkt_aktiv {
+    font-size:14px;
+    position:absolute;
+    bottom: 348px;
+    right: 145px;
+}
+
+span#schaltpkt {
+    font-family:eurostile extendedtwo,microgrammadmedext,helvetica,arial,sans-serif;
+    position:absolute;
+    bottom: 348px;
+    left: 85px;
+    font-size: 26px;
+    line-height: 1em;
+}
+
+
+ul#zeiteinst_uhr {
+    font-family:eurostile extendedtwo,microgrammadmedext,helvetica,arial,sans-serif;
+    font-size:72px;
+    position: absolute;
+    left: 82px;
+    top: 245px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul#zeiteinst_uhr li {
+    float: left;
+    margin-right: 5px;
+}

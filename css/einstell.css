@@ -1,0 +1,38 @@
+/**
+*
+* CSS für Layer Einstellungen
+* 
+*/
+
+div#layer_einstell {
+    visibility: hidden;
+    opacity: 0;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+}
+
+div#textfeld_xmas {
+    position:absolute;
+    top:82px;
+    left:60px;
+    width: 250px;
+    font-size:14px;
+    opacity: 0.5;
+}
+
+div#tasterfeld_xmas {
+    position:absolute;
+    top:80px;
+    left:380px;
+    width: 230px;
+}
+
+div#tasterfeld_nacht {
+    position:absolute;
+    top:225px;
+    left:485px;
+    width: 120px;
+}

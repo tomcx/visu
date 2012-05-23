@@ -1,0 +1,21 @@
+/**
+*
+* CSS für Layer Logbuch
+* 
+*/
+
+div#layer_log {
+    visibility: hidden;
+    opacity: 0;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+}
+
+canvas#meldelog {
+    position: absolute;
+    top: 40px;
+    left: 25px;
+}

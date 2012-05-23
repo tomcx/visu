@@ -1,0 +1,204 @@
+/**
+*
+* CSS für Allgemeines
+* 
+*/
+
+/* body */
+html, body {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	font-family: helvetica, arial, sans-serif;
+	color: #fff;
+	font-size: 11px;
+    background-color: #204758;
+	}
+
+
+/* Eingebetteter Zeichensatz */
+@font-face {
+   font-family: eurostile extendedtwo;
+   src: url(../fonts/eurostile_becker_reg_extd.ttf);
+   }
+
+   
+ /* Buttons */
+.button_std {
+	width: 110px;
+	height: 74px;
+	margin-bottom: -6px;
+	margin-right: -6px;
+	text-align: center;
+    position: relative;
+    top: 0px;
+    let: 0px;
+	float: left;
+	background: url(../img/button_std.png);
+    cursor: pointer;
+	}
+	
+.button_std_text {
+    /*
+    Werte passend für vertikale Zentrierung
+    bei 14px-Font!!
+    */
+    display: inline-block;
+    position: relative;
+    top: 42%;
+    margin-top: -8%;
+    margin-left: 10px;
+    margin-right: 10px;
+	font-size: 14px;
+	font-weight: normal;
+	color: #C4CACA;
+}
+
+.button_std_dummy {
+	width: 110px;
+	height: 74px;
+	margin-bottom: -6px;
+	margin-right: -6px;
+	float: left;
+	}
+
+.button_breit {
+	width: 216px;
+	height: 74px;
+	margin-bottom: -6px;
+	margin-right: -6px;
+	text-align: center;
+	float: left;
+    background: url(../img/button_breit.png);
+    cursor: pointer;
+	}
+	
+.button_breit span {
+	font-size: 14px;
+	font-weight: normal;
+	color: #C4CACA;
+	position: relative;
+	top: 28px;
+}
+
+.box_close {
+    background-image: url(../img/icon_close.png);
+	position: absolute;
+ 	top: 525px;
+ 	right: 22px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+	}
+
+.layer_drag {
+    position: absolute;
+    top: 10px;
+    left: 740px;
+    width: 50px;
+    height: 500px;
+    cursor: move;
+}
+    
+ /* Canvas */
+.background_canvas {
+    position:absolute;
+}
+
+
+ /* Anzeigen */
+.label {
+    position: relative;
+    top: 8px;
+    left: 5px;
+    color: #7290A1;
+    }
+    
+.wert {
+    position: relative;
+    top: 6px;
+    left: 5px;
+    font-size: 22px;
+    color: #C4CACA;
+    }
+    
+.wert_klein {
+    position: relative;
+    top: 6px;
+    left: 6px;
+    font-size: 14px;
+    color: #C4CACA;
+    }
+
+.sollwert {
+    position: relative;
+    top: 4px;
+    left: 15px;
+    color: #7290A1;
+    }
+    
+.statustext_rot {
+    font-size: 10px;
+    color: #C4CACA;
+    background-color: #550000;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.statustext_gruen {
+    font-size: 10px;
+    color: #C4CACA;
+    background-color: #006600;
+    text-align: center;
+    opacity: 0.8;
+}
+
+
+/* outer box */
+div#wrapper {
+	width: 100%;
+ 	height: 100%;
+ 	position: absolute;
+ 	top: 0px;
+ 	left: 0px;
+    overflow: hidden;
+    -moz-user-select:none;
+    -khtml-user-select: none;
+    background: url(../img/visu-bg2.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+ /* Obere Andockleiste */
+div#magnleiste {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 201;
+    width: 100%;
+    height: 5px;
+    background: url(../img/magnleiste.png);
+    background-repeat: repeat-x;
+}
+
+div#magnleiste_schatten {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    width: 100%;
+    height: 8px;
+    background: url(../img/magnleiste_schatten.png);
+    background-repeat: repeat-x;
+}
+

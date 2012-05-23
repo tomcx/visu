@@ -1,0 +1,179 @@
+/**
+*
+* CSS für Widgets
+* 
+*/
+
+.widg_dragbar {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: move;
+}
+
+/* Meldebox */
+div#widg_meldebox {
+    position: absolute;
+    top: 323px;
+    left: 16px;
+}
+
+canvas#widg_meldebox_canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+canvas#meldetext {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+
+/* Main menu */
+div#widg_menu {
+	position: absolute;
+	top: 127px;
+	left: 390px;  
+}
+
+div#widg_menu_tastfeld {
+    position: absolute;
+    top: 22px;
+    left: 27px;
+    width: 320px;
+    height: 150px;
+    
+}
+
+canvas#widg_menu_canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+    
+/* Uhr */
+div#widg_clock {
+    position: absolute;
+    top: 18px;
+    left: 390px;
+}
+
+canvas#widg_clock_canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+p#datum_zeit {
+    position: absolute;
+    left: -5px;
+    top: -5px;
+    color: #aaa;
+    width: 380px;
+    text-align: center;
+}
+
+span#clock {
+    font-size: 56px;
+    font-family: eurostile extendedtwo, microgrammadmedext, helvetica, arial, sans-serif;
+}
+
+span#date {
+    position: relative;
+    left: 0px;
+    top: -7px;
+    font-size: 16px;
+    font-family: eurostile extendedtwo, microgrammadmedext, helvetica, arial, sans-serif;
+}
+
+.sonnzeit{
+    position: absolute;
+    top: 95px;
+    color: #7290A1;
+}
+
+span#sonnaufg {
+    left: 50px;
+}
+
+span#sonnunterg {
+    left: 200px;
+}
+
+
+/* Außentemp. */
+div#widg_aussentemp {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+}
+
+canvas#widg_aussentemp_canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+canvas#aussentemp_chart {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    cursor: pointer;
+}
+
+div#anz_aussentemp {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+}
+
+div#anz_aussentemp_minmax {
+    position: absolute;
+    top: 7px;
+    left: 270px;
+}
+
+/* Personen */
+div#widg_pers {
+    position: absolute;
+    top: -124px;
+    left: 390px;
+}
+
+canvas#widg_pers_canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.widg_pers_img {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 29px;
+    opacity: 0.8;
+}
+
+.widg_pers_status {
+    position: absolute;
+    top: 95px;
+    color: #7290A1;
+}
+
+span#widg_pers_status1 {
+    left: 30px;
+}
+
+span#widg_pers_status2 {
+    left: 118px;
+}
+
+span#widg_pers_status3 {
+    left: 205px;
+}
+
+span#widg_pers_status4 {
+    left: 295px;
+}

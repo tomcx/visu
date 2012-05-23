@@ -1,0 +1,626 @@
+/**
+*
+* CSS für Layer Wohnung
+* 
+*/
+
+div#layer_wohnung {
+    visibility: hidden;
+    opacity: 0;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+}
+
+#fl_label {
+	left: 200px;
+	}
+	
+#fl_istwert {
+	left: 200px;
+	}
+
+#fl_sollwert {
+	left: 207px;
+	}
+
+
+/* Grundbild */
+img#layout {
+ 	position: absolute;
+ 	top: 77px;
+ 	left: 21px;	
+    opacity: 0.8;
+    -moz-user-select:none;
+    -khtml-user-select: none;
+	}
+    
+    
+/* Zimmer */
+div#tf_wz {
+ 	position: absolute;
+ 	top: 100px;
+ 	left: 448px;
+	width: 177px;
+	height: 274px;
+	background: url(../img/blank.gif);
+	}
+
+		
+div#tf_wz2 {
+ 	position: absolute;
+ 	top: 381px;
+ 	left: 448px;
+	width: 177px;
+	height: 114px;
+	background: url(../img/blank.gif);
+	}
+	
+div#tf_fl {
+ 	position: absolute;
+ 	top: 331px;
+ 	left: 46px;
+	width: 396px;
+	height: 169px;
+	background: url(../img/blank.gif);
+	}
+	
+div#tf_sz {
+ 	position: absolute;
+ 	top: 100px;
+ 	left: 164px;
+	width: 143px;
+	height: 220px;
+	background: url(../img/blank.gif);
+	}
+	
+div#tf_kz {
+ 	position: absolute;
+ 	top: 100px;
+ 	left: 46px;
+	width: 107px;
+	height: 220px;
+	background: url(../img/blank.gif);
+	}
+	
+div#tf_ba {
+ 	position: absolute;
+ 	top: 391px;
+ 	left: 46px;
+	width: 183px;
+	height: 104px;
+	background: url(../img/blank.gif);
+	}
+	
+div#tf_wc {
+ 	position: absolute;
+ 	top: 411px;
+ 	left: 238px;
+	width: 72px;
+	height: 89px;
+	background: url(../img/blank.gif);
+	}
+	
+.inner_icon1 {
+    position: absolute;
+ 	bottom: 5px;
+ 	right: 65px;
+}
+
+.inner_icon2 {
+    position: absolute;
+ 	bottom: 5px;
+ 	right: 35px;
+}
+    
+.inner_icon3 {
+    position: absolute;
+ 	bottom: 5px;
+ 	right: 5px;
+}
+    
+img#fl_steckd {
+    right: 22px;
+}
+    
+img#fl_licht {
+    right: 52px;
+}
+      
+img#kz_steckd {
+    right: 65px;
+}
+    
+img#kz_licht {
+    right: 35px;
+}
+
+img#sz_steckd1 {
+    bottom: 68px;
+}
+
+img#sz_steckd2 {
+    bottom: 68px;
+}
+      
+img#sz_licht {
+    bottom: 68px;
+}
+
+img#sz_schrank_licht {
+    bottom: 7px;
+    right: 22px;
+}
+ 
+
+/* Fenster */
+img#fenster0 {
+ 	position: absolute;
+ 	top: 78px;
+ 	left: 65px;	
+	}	
+
+img#fenster1 {
+ 	position: absolute;
+ 	top: 78px;
+ 	left: 176px;	
+	}
+
+img#fenster2 {
+ 	position: absolute;
+ 	top: 78px;
+ 	left: 458px;	
+	}
+	
+img#fenster3 {
+ 	position: absolute;
+ 	top: 78px;
+ 	left: 545px;	
+	}
+	
+img#fenster4 {
+ 	position: absolute;
+ 	top: 269px;
+ 	left: 618px;	
+	}
+	
+img#fenster5 {
+ 	position: absolute;
+ 	top: 374px;
+ 	left: 618px;	
+	}
+	
+img#fenster6 {
+ 	position: absolute;
+ 	top: 488px;
+ 	left: 545px;	
+	}
+	
+img#fenster7 {
+ 	position: absolute;
+ 	top: 488px;
+ 	left: 458px;	
+	}
+	
+img#fenster8 {
+ 	position: absolute;
+ 	top: 493px;
+ 	left: 353px;	
+	}
+	
+img#fenster9 {
+ 	position: absolute;
+ 	top: 493px;
+ 	left: 250px;	
+	}
+	
+img#fenster10 {
+ 	position: absolute;
+ 	top: 488px;
+ 	left: 143px;	
+	}
+	
+img#fenster11 {
+ 	position: absolute;
+ 	top: 488px;
+ 	left: 54px;	
+	}	
+	
+    
+/* Türen */
+img#tuer0 {
+ 	position: absolute;
+ 	top: 316px;
+ 	left: 68px;	
+	}
+	
+img#tuer1 {
+ 	position: absolute;
+ 	top: 316px;
+ 	left: 164px;	
+	}
+	
+img#tuer2 {
+ 	position: absolute;
+ 	top: 270px;
+ 	left: 211px;	
+	}
+	
+img#tuer3 {
+ 	position: absolute;
+ 	top: 316px;
+ 	left: 310px;	
+	}
+	
+img#tuer4 {
+ 	position: absolute;
+ 	top: 396px;
+ 	left: 260px;	
+	}
+	
+img#tuer5 {
+ 	position: absolute;
+ 	top: 376px;
+ 	left: 137px;	
+	}
+    
+    
+/* Rollos */
+.rollotxt {
+	position: relative;
+	top: -2px;
+	color: #7290A1;
+	}
+	
+.rollobalkenrahmen {
+	float: left;
+	width: 6px;
+	height: 40px;
+	margin-top: 3px;
+	margin-right: 4px;
+	padding: 1px;
+	border: 1px solid #9FAEB3;
+	}
+
+.rollobalken {
+	width: 100%;
+	height: 0%;
+	background-color: #D0D6D8;
+	}
+
+.rollozeiger {
+	position: absolute;
+ 	top: 30px;
+ 	left: 52px;
+	}
+	
+.rollowert {
+	font-size: 18px;
+	font-weight: normal;
+	color: #D0D6D8;
+	}
+
+.rolloxmas {
+    position: absolute;
+ 	top: 0.3em;
+ 	left: 62px;
+    line-height: 0.7em;
+    }
+
+
+div#rollobox {
+	width: 800px;
+ 	height: 600px;
+ 	position: absolute;
+ 	top: 0px;
+ 	left: 0px;	
+	visibility: hidden;
+    opacity: 0;
+	}
+	
+img#rollobedienfeld_li {
+	position: absolute;
+ 	top: 112px;
+ 	left: 55px;
+	}
+	
+img#rollobedienfeld_re_oben {
+	position: absolute;
+ 	top: 112px;
+ 	left: 277px;
+	}
+
+img#rollobedienfeld_re_unten {
+	position: absolute;
+ 	top: 353px;
+ 	left: 277px;
+	}
+	
+div#tastfeld_rollopos {
+	position: absolute;
+	top: 127px;
+	left: 113px;
+	width: 106px;
+	}
+
+div#tastfeld_rollofunktionen {
+	position: absolute;
+	top: 130px;
+	left: 338px;
+	width: 230px;
+	}
+	
+div#tastfeld_rolloschnellwahl {
+	position: absolute;
+	top: 390px;
+	left: 338px;
+	width: 230px;
+	}
+
+div#rollo0 {
+	position: absolute;
+ 	top: 27px;
+ 	left: 65px;
+	width: 85px;
+	height: 52px;
+	}
+
+div#rollo1 {
+	position: absolute;
+ 	top: 27px;
+ 	left: 176px;
+	width: 85px;
+	height: 52px;
+	}
+
+div#rollo2 {
+	position: absolute;
+ 	top: 27px;
+ 	left: 458px;
+	width: 85px;
+	height: 52px;
+	}
+
+div#rollo3 {
+	position: absolute;
+ 	top: 27px;
+ 	left: 545px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo4 {
+	position: absolute;
+ 	top: 279px;
+ 	left: 655px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo5 {
+	position: absolute;
+ 	top: 384px;
+ 	left: 655px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo6 {
+	position: absolute;
+ 	top: 520px;
+ 	left: 545px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo7 {
+	position: absolute;
+ 	top: 520px;
+ 	left: 458px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo8 {
+	position: absolute;
+ 	top: 525px;
+ 	left: 353px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo9 {
+	position: absolute;
+ 	top: 525px;
+ 	left: 250px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo10 {
+	position: absolute;
+ 	top: 520px;
+ 	left: 143px;
+	width: 85px;
+	height: 52px;
+	}
+	
+div#rollo11 {
+	position: absolute;
+ 	top: 520px;
+ 	left: 54px;
+	width: 85px;
+	height: 52px;
+	}
+	
+.rolloanwahl {
+    width: 97px;
+    height: 68px;
+    position: absolute;
+    }
+	
+div#rolloanwahl0 {
+ 	top: 60px;
+ 	left: 52px;
+	background-image: url(../img/pfeil_hoch.png);
+	}
+
+div#rolloanwahl1 {
+ 	top: 60px;
+ 	left: 163px;
+	background-image: url(../img/pfeil_hoch.png);
+	}
+
+div#rolloanwahl2 {
+ 	top: 60px;
+ 	left: 445px;
+	background-image: url(../img/pfeil_hoch.png);
+	}
+
+div#rolloanwahl3 {
+ 	top: 60px;
+ 	left: 532px;
+	background-image: url(../img/pfeil_hoch.png);
+	}
+	
+div#rolloanwahl4 {
+	width: 68px;
+    height: 97px;
+ 	top: 257px;
+ 	left: 597px;
+	background-image: url(../img/pfeil_rechts.png);
+	}
+	
+div#rolloanwahl5 {
+	width: 68px;
+    height: 97px;
+ 	top: 362px;
+ 	left: 597px;
+	background-image: url(../img/pfeil_rechts.png);
+	}
+	
+div#rolloanwahl6 {
+ 	top: 467px;
+ 	left: 533px;
+	background-image: url(../img/pfeil_runter.png);
+	}
+	
+div#rolloanwahl7 {
+ 	top: 467px;
+ 	left: 445px;
+	background-image: url(../img/pfeil_runter.png);
+	}
+	
+div#rolloanwahl8 {
+ 	top: 467px;
+ 	left: 339px;
+	background-image: url(../img/pfeil_runter.png);
+	}
+	
+div#rolloanwahl9 {
+ 	top: 467px;
+ 	left: 236px;
+	background-image: url(../img/pfeil_runter.png);
+	}
+	
+div#rolloanwahl10 {
+ 	top: 467px;
+ 	left: 129px;
+	background-image: url(../img/pfeil_runter.png);
+	}
+	
+div#rolloanwahl11 {
+ 	top: 467px;
+ 	left: 40px;
+	background-image: url(../img/pfeil_runter.png);
+	}
+
+    
+/*Sublayer Raumanzeige*/
+div#raumbox {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 0px;
+    left: 0px;  
+    visibility: hidden;
+    opacity: 0;
+    }
+    
+span#raumlabel {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 32px;
+    font-family: eurostile extendedtwo, helvetica, arial, sans-serif;
+    } 
+
+canvas#temp_balken {
+    position: absolute;
+    top: 278px;
+    left: 50px;
+    }
+    
+canvas#temp_chart {
+    position: absolute;
+    top: 110px;
+    left: 52px;
+    cursor: pointer;
+    }
+
+img#heizung_balken_ist {
+    position: absolute;
+    top: 261px;
+    left: 108px;
+    }
+    
+img#heizung_balken_soll {
+    position: absolute;
+    top: 277px;
+    left: 108px;
+    }
+
+div#heizung_anzeige_ist {
+    position: absolute;
+    top: 275px;
+    left: 310px;
+    }
+ 
+span#isttemp {
+    font-size: 30px;
+    }
+    
+div#heizung_anzeige_soll {
+    position: absolute;
+    top: 355px;
+    left: 192px;
+    }
+
+div#heizung_minus {
+    position: absolute;
+    top: 347px;
+    left: 69px;
+    }
+    
+div#heizung_plus {
+    position: absolute;
+    top: 347px;
+    left: 279px;
+    }
+
+div#tastfeld_licht {
+    position: absolute;
+    bottom: 50px;
+    left: 468px;
+    width: 230px;
+    }
+
+div#tastfeld_sonderfkt {
+    position: absolute;
+    top: 483px;
+    left: 69px;
+    width: 340px;
+    }
+    

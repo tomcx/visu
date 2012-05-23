@@ -1,0 +1,27 @@
+/**
+*
+* CSS für Layer Visu Systeminfo
+* 
+*/
+
+div#layer_visinfo {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    background-color: rgba(4, 23, 35, 0.9);
+    vertical-align: middle;
+    z-index: 300;
+}
+
+p#visinfo_txt {
+    font-size: 30px;
+    font-family: eurostile extendedtwo, helvetica, arial, sans-serif;
+    position: relative;
+    top: 47%;
+    margin-top: -20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}

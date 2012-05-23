@@ -1,0 +1,689 @@
+<!DOCTYPE html><!-- HTML5 Doctype -->
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>smarthome HMI</title>
+        
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/visinfo.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/pers.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/wohn.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/einstell.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/widg.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/log.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="css/fbh.css" type="text/css" media="screen" charset="utf-8" />
+        
+        <script src="lib/magic.js" type="text/javascript"></script>
+        <script src="lib/tame.js" type="text/javascript"></script>
+        
+        <script src="js/visu.js" type="text/javascript"></script>
+        <script src="js/canvas.js" type="text/javascript"></script>
+        <script src="js/meldtxt.js" type="text/javascript"></script>
+        <script src="js/bilder.js" type="text/javascript"></script>
+        <script src="js/anzeig.js" type="text/javascript"></script>
+        <script src="js/comm.js" type="text/javascript"></script>
+        <script src="js/comm_funkt.js" type="text/javascript"></script>
+        <script src="js/comm_def.js" type="text/javascript"></script>
+		<script src="js/layer.js" type="text/javascript"></script>
+        <script src="js/sonst.js" type="text/javascript"></script>
+		<script src="js/button.js" type="text/javascript"></script>
+        <script src="js/init.js" type="text/javascript"></script>
+    </head>
+    
+    <body>
+		<div id="wrapper"><!-- begin wrapper -->
+        
+            <!--  ############################### Widgets ################################ -->
+            
+            <div id="magnleiste"></div>
+            <div id="magnleiste_schatten"></div>
+
+            <div id="widg_clock">  
+                <canvas id="widg_clock_canvas" width="380" height="135"></canvas>
+                <p id="datum_zeit">
+                    <span id="clock">00:00:00</span><br />
+                    <span id="date">Montag, 01.01.2000</span>
+                </p>
+                <span class="sonnzeit" id="sonnaufg">Sonnenaufgang:&nbsp;<span id="sonnaufg_zeit">6:00</span></span>
+                <span class="sonnzeit" id="sonnunterg">Sonnenunergang:&nbsp;<span id="sonnunterg_zeit">20:00</span></span>
+                <canvas id="widg_clock_dragbar" class="widg_dragbar" width="150" height="45"></canvas>
+            </div>
+            
+            <div id="widg_aussentemp">            
+                <canvas id="widg_aussentemp_canvas" width="380" height="290"></canvas>
+                <div id="anz_aussentemp">
+                    <span class="label">Ist</span><br />
+                    <span class="wert"><span id="aussentemp_ist">18.1</span>°C</span><br />
+                </div>
+                <div id="anz_aussentemp_minmax">
+                    <span class="label">Maximum:&nbsp;<span id="aussentemp_max">21.2</span>°C</span><br />
+                    <span class="label">Minimum:&nbsp;&nbsp;<span id="aussentemp_min">18.1</span>°C</span><br />
+                </div>
+                <canvas id="aussentemp_chart" width="371" height="200"></canvas>
+                <canvas id="widg_aussentemp_dragbar" class="widg_dragbar" width="150" height="45"></canvas>
+            </div>
+
+            <div id="widg_pers">
+                <canvas id="widg_pers_canvas" width="380" height="135"></canvas>
+                <nobr>
+                <img src="img/pers1_kl.png" height="70px" class="widg_pers_img"  alt="" />
+                <img src="img/pers2_kl.png" height="70px" class="widg_pers_img"  alt="" />
+                <img src="img/pers3_kl.png" height="70px" class="widg_pers_img"  alt="" />
+                <img src="img/pers4_kl.png" height="70px" class="widg_pers_img"  alt="" />
+                </nobr>
+                <span id="widg_pers_status1" class="widg_pers_status">no data</span>
+                <span id="widg_pers_status2" class="widg_pers_status">no data</span>
+                <span id="widg_pers_status3" class="widg_pers_status">no data</span>
+                <span id="widg_pers_status4" class="widg_pers_status">no data</span>
+                <canvas id="widg_pers_dragbar" class="widg_dragbar" width="150" height="45"></canvas>
+            </div>
+            
+            <div id="widg_menu">
+                <canvas id="widg_menu_canvas" width="380" height="200"></canvas>               
+                <div id="widg_menu_tastfeld">
+                    <div id="nav1" class="button_std">
+                            <span class="button_std_text">Wohnung</span>
+                    </div>
+                    <div id="nav2" class="button_std">
+                            <span class="button_std_text">Personen</span>
+                    </div>
+                    <div id="nav3" class="button_std">
+                            <span class="button_std_text">Einstell.</span>
+                    </div>
+                    <div id="nav4" class="button_std">
+                            <span class="button_std_text">Logbuch</span>
+                    </div>
+                    <div id="nav5" class="button_std">
+                            <span class="button_std_text">Heizung</span>
+                    </div>
+                    <div id="nav6" class="button_std">
+                            <span class="button_std_text">---</span>
+                    </div>
+                </div>
+                <canvas id="widg_menu_dragbar" class="widg_dragbar" width="150" height="45"></canvas>
+            </div>
+                
+            <div id="widg_meldebox">  
+                <canvas id="widg_meldebox_canvas" width="760" height="240"></canvas>
+                <canvas id="meldetext" width="750" height="220"></canvas>
+                <canvas id="widg_meldebox_dragbar" class="widg_dragbar" width="150" height="45"></canvas>
+            </div>
+            <!-- Ende Widgets -->
+
+            <!--  ############################### Layer Wohnung ################################ -->
+            
+            <div id="layer_wohnung">
+                
+                <canvas id="layer_wohnung_canvas" class="background_canvas" width="800" height="600"></canvas>
+
+                <!--  #### Layout Wohnung #### -->
+                
+                <!-- Hintergrund -->
+			    <img src="img/main_bg2.png" id="layout" width="627" height="448" alt="" />
+                
+    			<!-- Touchfelder Zimmer -->
+    			<div id="tf_wz">
+    				<!-- Touchfeld WZ -->
+    				<span class="label">Temp</span><br />
+    				<span class="wert"><span id="wz_temp">20</span>°C</span><br />
+    				<span class="sollwert">Soll <span id="wz_solltemp">20</span>°C</span><br />
+    				<span class="label">RLF</span><br />
+    				<span class="wert"><span id="wz_rlf">60</span>%</span><br />
+                    <img src="img/licht_aus.png" id="wz_licht" class="inner_icon1" width="34" height="34" alt="" /> 
+                    <img src="img/steckd_1_aus.png" id="wz_steckd1" class="inner_icon2" width="34" height="34" alt="" />
+                    <img src="img/steckd_2_aus.png" id="wz_steckd2" class="inner_icon3" width="34" height="34" alt="" /> 
+    			</div>
+    			<div id="tf_wz2">
+    				<!-- Touchfeld Küchenbereich -->
+                    <img src="img/licht_aus.png" id="kb_licht" class="inner_icon2" width="34" height="34" alt="" />
+                    <img src="img/steckd_aus.png" id="kb_steckd" class="inner_icon3" width="34" height="34" alt="" />  
+    			</div>
+    			<div id="tf_fl">
+    				<!-- Touchfeld Flur -->
+    				<span class="label" id="fl_label">Temp</span><br />
+    				<span class="wert" id="fl_istwert"><span id="fl_temp">20</span>°C</span><br />
+    				<span class="sollwert" id="fl_sollwert">Soll <span id="fl_solltemp">20</span>°C</span><br />
+                    <img src="img/licht_aus.png" id="fl_licht" class="inner_icon2" width="34" height="34" alt="" />
+                    <img src="img/steckd_aus.png" id="fl_steckd" class="inner_icon3" width="34" height="34" alt="" />
+    			</div>
+    			<div id="tf_sz">
+    				<!-- Touchfeld Schlafzimmer -->
+    				<span class="label">Temp</span><br />
+    				<span class="wert"><span id="sz_temp" >20</span>°C</span><br />
+    				<span class="sollwert">Soll <span id="sz_solltemp">20</span>°C</span><br />
+    				<span class="label">RLF</span><br />
+    				<span class="wert"><span id="sz_rlf">60</span>%</span><br />
+                    <img src="img/licht_aus.png" id="sz_licht" class="inner_icon1" width="34" height="34" alt="" />                 
+                    <img src="img/steckd_1_aus.png" id="sz_steckd1" class="inner_icon2" width="34" height="34" alt="" />
+                    <img src="img/steckd_2_aus.png" id="sz_steckd2" class="inner_icon3" width="34" height="34" alt="" />
+                    <img src="img/licht_aus.png" id="sz_schrank_licht" class="inner_icon3" width="34" height="34" alt="" /> 
+    			</div>
+    			<div id="tf_kz">
+    				<!-- Touchfeld Kinderzimmer -->
+    				<span class="label">Temp</span><br />
+    				<span class="wert"><span id="kz_temp">20</span>°C</span><br />
+    				<span class="sollwert">Soll <span id="kz_solltemp">20</span>°C</span><br />
+                    <img src="img/licht_aus.png" id="kz_licht" class="inner_icon3" width="34" height="34" alt="" />
+                    <img src="img/steckd_aus.png" id="kz_steckd" class="inner_icon2" width="34" height="34" alt="" />
+    			</div>
+    			<div id="tf_ba">
+    				<!-- Touchfeld Bad -->
+    				<span class="label">Temp</span><br />
+    				<span class="wert"><span id="ba_temp">20</span>°C</span><br />
+    				<span class="sollwert">Soll <span id="ba_solltemp">20</span>°C</span><br />
+    				<span class="label">RLF</span><br />
+    				<span class="wert"><span id="ba_rlf">60</span>%</span><br />
+                    <img src="img/licht_aus.png" id="ba_licht" class="inner_icon3" width="34" height="34" alt="" />
+    			</div>
+    			<div id="tf_wc">
+    				<!-- Touchfeld WC -->
+    				<span class="label">Temp</span><br />
+    				<span class="wert"><span id="wc_temp">20</span>°C</span><br />
+    				<span class="sollwert">Soll <span id="wc_solltemp">20</span>°C</span><br />
+                    <img src="img/licht_aus.png" id="wc_licht" class="inner_icon3" width="34" height="34" alt="" />
+    			</div>
+    		
+    			<!-- Fenster im Uhrzeigersinn, angefangen im Kinderzimmer -->
+    			<img src="img/fenster_waag_ws.png" id="fenster0" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster1" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster2" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster3" width="70" height="29" alt="" />
+    			<img src="img/fenster_senkr_ws.png" id="fenster4" width="29" height="70" alt="" />
+    			<img src="img/fenster_senkr_ws.png" id="fenster5" width="29" height="70" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster6" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster7" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster8" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster9" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster10" width="70" height="29" alt="" />
+    			<img src="img/fenster_waag_ws.png" id="fenster11" width="70" height="29" alt="" />
+    			<!-- Türen im Uhrzeigersinn, angefangen im Kinderzimmer -->
+    			<img src="img/tuer_waag_ws.png" id="tuer0" width="53" height="19" alt="" />
+    			<img src="img/tuer_waag_ws.png" id="tuer1" width="53" height="19" alt="" />
+    			<img src="img/tuer_senkr_ws.png" id="tuer2" width="19" height="53" alt="" />
+    			<img src="img/tuer_waag_ws.png" id="tuer3" width="53" height="19" alt="" />
+    			<img src="img/tuer_waag_ws.png" id="tuer4" width="53" height="19" alt="" />
+    			<img src="img/tuer_waag_ws.png" id="tuer5" width="53" height="19" alt="" />
+    			
+                <div id="wohnlayer_close" class="box_close"></div>
+                
+    			<!--  #### Container für Rollobedienung #### -->
+                
+    			<div id="rollobox">
+    				
+                    <canvas id="rollobox_canvas" class="background_canvas" width="800" height="600"></canvas>
+                                       
+                    <script type="text/javascript">
+    				for (var i = 0; i < 12; i++) {
+    					document.write('<div id="rolloanwahl' + i + '" class="rolloanwahl"></div>');
+    				}
+    			    </script>
+                    
+    				<div id="tastfeld_rollopos">
+    					<div id="rollopos1" class="button_std">
+    						<span class="button_std_text">Geöffnet</span>
+    					</div>
+    					<div id="rollopos2" class="button_std">
+    						<span class="button_std_text">Halb</span>
+    					</div>
+    					<div id="rollopos3" class="button_std">
+    						<span class="button_std_text">Dreiviertel</span>
+    					</div>
+    					<div id="rollopos4" class="button_std">
+    						<span class="button_std_text">Fast Geschl.</span>
+    					</div>
+    					<div id="rollopos5" class="button_std">
+    						<span class="button_std_text">Geschlossen</span>
+    					</div>
+    				</div>
+    				
+    				<div id="tastfeld_rollofunktionen">
+    					<div class="button_std_dummy" >
+    						<!-- Dummy -->
+    					</div>
+    					<div id="rollofunkt0" class="button_std">
+    						<span class="button_std_text">---</span>
+    					</div>
+    					<div id="rollofunkt1" class="button_std">
+    						<span class="button_std_text">Auto</span>
+    					</div>
+    					<div id="rollofunkt2" class="button_std">
+    						<span class="button_std_text">---</span>
+    					</div>
+    					<div id="rollofunkt3" class="button_std">
+    						<span class="button_std_text">Sperren</span>
+    					</div>
+    					<div id="rollofunkt4" class="button_std">
+    						<span class="button_std_text">X-mas</span>
+    					</div>
+    				</div>
+    				
+    				<div id="tastfeld_rolloschnellwahl">
+    					<div id="rolloschnellwahl0" class="button_std">
+    						<span class="button_std_text">Wohnz.</span>
+    					</div>
+    					<div id="rolloschnellwahl1" class="button_std">
+    						<span class="button_std_text">Alle</span>
+    					</div>
+    				</div>
+                    
+                    <div id="rollobox_close" class="box_close"></div>
+                    
+    			</div><!-- Ende Rollocontainer -->
+    	
+        
+        
+    		   <!-- ### Anzeigen für Rollos ### -->
+               
+    			<script type="text/javascript">
+    				for (var i = 0; i < 12; i++) {
+    					document.write('<div id="rollo' + i + '">');
+    					document.write('<div class="rollobalkenrahmen">');
+    					document.write('<div class="rollobalken"></div>');
+    					document.write('</div>');
+    					document.write('<span class="rollowert">0</span><span class="rollowert">%</span><br />');
+    					document.write('<span class="rollotxt">Auto</span><br />');
+    					document.write('<span class="rollotxt">Nacht</span><br />');
+                        document.write('<span class="rolloxmas">x</span><br />');
+    					document.write('<img src="img/rollo_steht.png" class="rollozeiger" width="17" height="17" alt="" />');
+    					document.write('</div>');
+    				}
+    			</script>
+    		
+            
+    			<!-- #### Container für Raumbedienung #### -->
+                
+    			<div id="raumbox">
+    			    
+                    <canvas id="raumbox_canvas" class="background_canvas" width="800" height="600"></canvas>
+                    
+    				<span id="raumlabel">Label</span>
+    				
+                    <canvas id="temp_chart" width="360" height="160"></canvas>
+                    <canvas id="temp_balken" width="300" height="100"></canvas>
+                    
+    				<div id="heizung_anzeige_ist">
+    					<span class="label">Ist</span><br />
+    					<span class="wert"><span id="isttemp">20.0</span> °C</span><br />	
+    				</div>
+    				
+    				<div id="heizung_anzeige_soll">
+    					<span class="label">Soll</span><br />
+    					<span class="wert"><span id="solltemp">20.0</span>°C</span><br />	
+    				</div>
+    				
+    				<div id="heizung_minus" class="button_std">
+    					<span class="button_std_text"> <<< </span>
+    				</div>
+    				<div id="heizung_plus" class="button_std">
+    					<span class="button_std_text"> >>> </span>
+    				</div>
+    				
+    				<div id="tastfeld_licht">
+    				    <!-- Buttontexte werden per JS geändert -->
+    					<div id="lichtfunkt0" class="button_std">
+    						<span class="button_std_text">Auto</span>
+    					</div>
+    					<div id="lichtfunkt1" class="button_std">
+    						<span class="button_std_text">Maximum</span>
+    					</div>
+    					<div id="lichtfunkt2" class="button_std">
+    						<span class="button_std_text">Szene 1</span>
+    					</div>
+    					<div id="lichtfunkt3" class="button_std">
+    						<span class="button_std_text">Szene 2</span>
+    					</div>
+    					<div id="lichtfunkt4" class="button_std">
+    						<span class="button_std_text">Szene 3</span>
+    					</div>
+    					<div id="lichtfunkt5" class="button_std">
+    						<span class="button_std_text">Szene 4</span>
+    					</div>
+                        <div id="lichtfunkt6" class="button_std">
+                            <span class="button_std_text">Szene 5</span>
+                        </div>
+                        <div id="lichtfunkt7" class="button_std">
+                            <span class="button_std_text">Szene 6</span>
+                        </div>
+                        <div id="lichtfunkt8" class="button_std">
+                            <span class="button_std_text">Szene 7</span>
+                        </div>
+                        <div id="lichtfunkt9" class="button_std">
+                            <span class="button_std_text">Szene 8</span>
+                        </div>
+    					<div id="lichtfunkt10" class="button_breit">
+    						<span>Aus</span>
+    					</div>					
+    				</div>
+    				
+    				<div id="tastfeld_sonderfkt">
+    				    <!-- Buttontexte werden per JS geändert -->
+    					<div id="sonderfunkt0" class="button_std">
+    						<span class="button_std_text">Sonder 1</span>
+    					</div>
+    					<div id="sonderfunkt1" class="button_std">
+    						<span class="button_std_text">Sonder 2</span>
+    					</div>
+    					<div id="sonderfunkt2" class="button_std">
+    						<span class="button_std_text">Sonder 3</span>
+    					</div>
+    				</div>
+                    
+                    <div id="raumbox_close" class="box_close"></div>
+    				
+    			</div><!-- Ende Raumcontainer -->
+                
+                <div id="layer_wohnung_dragbar" class="layer_drag"></div>
+                
+            </div>
+            
+            <!--  ######################### Layer Persönliche Einstellungen ################################ -->
+            
+            <div id="layer_personal">
+                
+                <canvas id="layer_personal_canvas" class="background_canvas" width="800" height="600"></canvas>
+                
+                <img id="persbild" src="img/pers1.png" height="500px" alt="" />
+                
+                <div id="pers_anwahl">
+                    <div id="pers_anw1" class="button_persanw">
+                        <img src="img/pers1_kl.png" height="70px"  alt="" />
+                    </div>
+    			    <div id="pers_anw2" class="button_persanw">
+    			        <img src="img/pers2_kl.png" height="70px" alt="" />
+    			    </div>
+    			    <div id="pers_anw3" class="button_persanw">
+    			        <img src="img/pers3_kl.png" height="70px" alt="" />
+    			    </div>
+                    <div id="pers_anw4" class="button_persanw">
+                        <img src="img/pers4_kl.png" height="70px" alt="" />
+    			    </div>
+                </div>
+                
+                <div id="pers_daten1">
+                        <span>Status:</span><br />
+                        <span>Wecker:</span><br />
+                        <span>Weckton:</span><br />
+                        <span>Bettseite:</span><br />
+                        <span>Schichtsystem:</span><br />
+                        <span>Zählstart:</span><br />
+                        <span>Woche1:</span><br />
+                        <span>Woche2:</span><br />
+                        <span>Woche3:</span><br />
+                        <span>Woche4:</span><br />
+                </div>
+                
+                <div id="pers_daten2">
+                        <span id="p_status">xxxxxxxxx</span><br />
+                        <span id="p_wecker">aus</span><br />
+                        <span id="p_weckton">xxxxx</span><br />
+                        <span id="p_bettseite">links</span><br />
+                        <span id="p_ssystem">0</span><br />
+                        <span id="p_sstart">1.1.1970</span><br />
+                        <span id="p_woche1">nicht belegt</span><br />
+                        <span id="p_woche2">nicht belegt</span><br />
+                        <span id="p_woche3">nicht belegt</span><br />
+                        <span id="p_woche4">nicht belegt</span><br />
+                </div>
+                
+                <span id="p_name">Name</span>
+                
+                <div id="tasterfeld_pers">
+                    <div id="pers_butt1" class="button_std">
+    			        <span class="button_std_text">Anwesend</span>
+    			    </div>
+                    <div id="pers_butt2" class="button_std">
+    			        <span class="button_std_text">Wecker Ein/Aus</span>
+    			    </div>
+                    <div id="pers_butt3" class="button_std">
+    			        <span class="button_std_text">Bettseite tauschen</span>
+    			    </div>
+                    <div id="pers_butt4" class="button_std">
+    			        <span class="button_std_text">Schlafen</span>
+    			    </div>
+                    <div id="pers_butt5" class="button_std">
+    			        <span class="button_std_text">Tagespres.</span>
+    			    </div>
+                    <div id="pers_butt6" class="button_std">
+    			        <span class="button_std_text">Wochenpres.</span>
+    			    </div>
+    			</div>			
+                
+
+                <canvas id="zeitleiste" width="250px" height="590px"></canvas>
+                 
+                
+                <div id="perslayer_close" class="box_close"></div>
+                
+                <div id="presetboxT">   
+                    <canvas id="presetboxT_canvas" class="background_canvas" width="515" height="600"></canvas>
+                    
+                    <div class="feld_dragdata">
+                        <div id="drag1" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag2" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag3" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag4" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag5" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag6" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag7" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag8" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag9" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag10" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                    </div>
+                    
+                    <div id="presetboxT_close" class="box_close"></div>
+                </div>
+                
+                <div id="presetboxW">   
+                    <canvas id="presetboxW_canvas" class="background_canvas" width="515" height="600"></canvas>
+                    
+                    <div class="feld_dragdata">
+                        <div id="drag11" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag12" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag13" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag14" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag15" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag16" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag17" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag18" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag19" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                        <div id="drag20" class="preset_data">
+    			            <span class="preset_data_text">keine Daten</span>
+    		    	    </div>
+                    </div>
+                    
+                    <div id="presetboxW_close" class="box_close"></div>
+                </div>
+                
+               
+                <!--  #### Container für Tageseinstellungen #### -->
+                <div id="zeitbox">
+    				
+                    <canvas id="zeitbox_canvas" class="background_canvas" width="515" height="600"></canvas>
+                                 
+                    <span id="schaltpkt">Gehen</span>
+                    
+                    <span id="schaltpkt_aktiv">deaktiviert</span>
+                    
+                    <ul id="zeiteinst_datum">
+                        <li id="zeiteinst_wotag">Montag</li>
+                        <li>,&nbsp;</li>
+                        <li id="zeiteinst_tag">23</li>
+                        <li>.</li>
+                        <li id="zeiteinst_monat">Februar</li>
+                    </ul>
+                    
+                    <ul id="zeiteinst_uhr">
+                        <li id="zeiteinst_std">00</li>
+                        <li>:</li>
+                        <li id="zeiteinst_min">00</li>
+                    </ul>
+                    
+                    <div id="tasterfeld_zeitfunkt">
+                        <div id="schaltpkt1" class="button_std"><span class="button_std_text">Wecken</span></div>
+                        <div id="schaltpkt2" class="button_std"><span class="button_std_text">Aufstehen</span></div>
+                        <div id="schaltpkt3" class="button_std"><span class="button_std_text">Schlafen</span></div>
+                        <div id="schaltpkt4" class="button_std_dummy"></div>
+                        <div id="schaltpkt5" class="button_std"><span class="button_std_text">Gehen</span></div>
+                        <div id="schaltpkt6" class="button_std"><span class="button_std_text">Kommen</span></div>
+                    </div>
+                    
+                    <div id="tasterfeld_zeiteinst">
+                        <div id="zeiteinst1" class="button_std"><span class="button_std_text">Std. +</span></div>
+                        <div id="zeiteinst2" class="button_std"><span class="button_std_text">Min. +</span></div>
+                        <div id="zeiteinst3" class="button_std"><span class="button_std_text">Nullen</span></div>
+                        <div id="zeiteinst4" class="button_std"><span class="button_std_text">Std. -</span></div>
+                        <div id="zeiteinst5" class="button_std"><span class="button_std_text">Min. -</span></div>
+                        <div id="zeiteinst6" class="button_std"><span class="button_std_text">Ein/Aus</span></div>
+                        <div class="button_std_dummy" > <!-- Dummy --></div>
+                        <div id="zeiteinst7" class="button_breit"><span>Speichern</span></div>              
+                    </div>
+
+                    <div id="zeitbox_close" class="box_close"></div>
+
+                </div>
+                
+                <div id="layer_personal_dragbar" class="layer_drag"></div>
+                                
+            </div><!-- Ende Layer Persönliche Einstellungen -->
+            
+            
+            <!--  ############################### Layer Allgem. Einstellungen ################################ -->
+            
+            <div id="layer_einstell">
+                
+                <canvas id="layer_einstell_canvas" class="background_canvas" width="800" height="600"></canvas>
+            
+                <div id="textfeld_xmas">
+                    <span>Einschaltzeit:&nbsp;&nbsp;</span><span id="xmas_einschaltzeit">00:00</span><br />
+                    <span>Ausschaltzeit:&nbsp;</span><span id="xmas_ausschaltzeit">00:00</span><br /><br />
+                    <span>Status:&nbsp;</span><span id="xmas_status">Aus</span>
+                </div>
+                
+                <div id="tasterfeld_xmas">
+                    <div id="xmas1" class="button_std"><span class="button_std_text">Auto</span></div>
+                    <div id="xmas2" class="button_std"><span class="button_std_text">Test</span></div>
+                </div>
+                
+                <div id="tasterfeld_nacht">
+                    <div id="nacht1" class="button_std"><span class="button_std_text">Nachtbetr.</span></div>
+                </div>
+
+                <div id="layer_einstell_dragbar" class="layer_drag"></div>            
+                <div id="einstlayer_close" class="box_close"></div>
+            </div><!-- Ende Layer Allgem. Einstellungen -->
+            
+            
+            <!--  ############################### Layer Logbuch Meldungen ################################ -->
+            
+            <div id="layer_log">
+                
+                <canvas id="layer_log_canvas" class="background_canvas" width="800" height="600"></canvas>
+                <canvas id="meldelog" width="680" height="510"></canvas>
+                
+                <div id="layer_log_dragbar" class="layer_drag"></div>
+                <div id="loglayer_close" class="box_close"></div>
+            </div><!-- Ende Layer Logbuch -->
+            
+            <!--  ############################### Layer Fußbodenheizung ################################ -->
+            
+            <div id="layer_fbh">
+                
+                <canvas id="layer_fbh_canvas" class="background_canvas" width="800" height="600"></canvas>
+                <canvas id="rohre" width="400" height="600" border="1"></canvas>
+                <canvas id="pumpe" width="120" height="120"></canvas>
+                <canvas id="mischer" width="120" height="120"></canvas>
+                <canvas id="heizkr" width="430" height="300"></canvas>
+                
+                <div id="tasterfeld_heiz_allg">
+                    <div id="heiz1" class="button_std"><span class="button_std_text">Heiz. Ein</span></div>
+                    <div id="heiz2" class="button_std"><span class="button_std_text">14°C Min.</span></div>
+                    <div id="heiz9" class="button_std"><span class="button_std_text">Absenkung</span></div>
+                </div>
+                
+                <div id="tasterfeld_heiz_hand">
+                    <div id="heiz3" class="button_std"><span class="button_std_text">Handbetrieb</span></div>
+                    <div id="heiz4" class="button_std"><span class="button_std_text">Vorl. +</span></div>
+                    <div id="heiz5" class="button_std"><span class="button_std_text">Mischer Auf</span></div>
+                    <div id="heiz6" class="button_std"><span class="button_std_text">Pumpe Ein</span></div>
+                    <div id="heiz7" class="button_std"><span class="button_std_text">Vorl. -</span></div>
+                    <div id="heiz8" class="button_std"><span class="button_std_text">Mischer Zu</span></div>
+                </div>
+                
+                <div id="vorlauftemp">
+                    <span class="label">Temp.</span><br />
+                    <span class="wert"><span id="vorl_temp">20.0</span>°C</span><br />
+                    <span class="sollwert">Soll <span id="vorl_solltemp">20.0</span>°C</span><br />
+                </div>
+                
+                <div id="pumpe_betrstd">
+                    <span class="label">BSZ</span><br />
+                    <span class="wert_klein"><span id="pumpe_bsz">2000</span>&nbsp;Std.</span><br />
+                </div>
+                
+                <div id="pumpe_spann" class="statustext_rot">Spannung OK</div>
+                <div id="pumpe_freig" class="statustext_rot">Freigabe</div>
+                <div id="pumpe_ein" class="statustext_rot">Eingeschaltet</div>
+                
+                <div id="mischerpos">
+                    <span class="label">Pos.</span><br />
+                    <span class="wert_klein"><span id="misch_pos">20</span>%</span><br />
+                </div>
+                
+                <div id="mischerstatus">
+                    <span class="label">Status</span><br />
+                    <span class="wert_klein" id="misch_stat">Handbetrieb</span><br />
+                </div>
+
+                <div id="layer_fbh_dragbar" class="layer_drag"></div>
+                <div id="fbhlayer_close" class="box_close"></div>
+            </div><!-- Ende Layer Fußbodenheizung -->
+            
+            <!--  ############################### Layer Visu Systeminfo ################################ -->
+            
+            <div id ="layer_visinfo">
+                <p id="visinfo_txt">Initialisiere ...</p>
+            </div>
+            
+		</div><!-- end wrapper -->
+     
+	</body>
+</html>
