@@ -50,8 +50,9 @@ VISU.init.comm_funkt = function() {
     //Daten für Zeitleiste auslesen
     VISU.comm.pollZeiten4W = function() {
         VISU.comm.cx.readArrayOfStruct({
-            fld: 'M',
-            addr: 2000,
+            //fld: 'M',
+            //addr: 2000,
+			name: '.VQ_ZEITEN4W',
             def: 'VISU.comm.defPersTagesDaten',
             jvar: 'VISU.anzeig.pers.zeitLeiste.data',
             //debug: true,
@@ -80,7 +81,7 @@ VISU.init.comm_funkt = function() {
     //Heizungsdaten lesen
     VISU.comm.pollHeizung = function() {
         VISU.comm.cx.readReq(VISU.comm.varRdHeizung);
-        VISU.comm.cx.readArrayOfByte({fld:'M',addr:1030,jvar: 'VISU.anzeig.fbh.hk.status'});
+        VISU.comm.cx.readArrayOfByte({name: '.VQ_STELLANTRSTATUS', jvar: 'VISU.anzeig.fbh.hk.status'});
     }
     
     //Einstellungen lesen
@@ -91,8 +92,9 @@ VISU.init.comm_funkt = function() {
     //Tages-/Wochenpreset schreiben
     VISU.comm.sendPreset = function(preset, tagesIndex) {
         VISU.comm.cx.writeReq({
-            fld:'M',
-            addr: 10508,
+            //fld:'M',
+            //addr: 10508,
+            addr: '%MB10508',
             //debug: true,
             ocd:500,
             oc: VISU.comm.pollZeiten4W,
@@ -111,8 +113,9 @@ VISU.init.comm_funkt = function() {
     VISU.comm.pollZeitEinstell = function() {
         VISU.comm.cx.readReq({ 
             // Parameter für Lesen
-            fld: 'M',
-            addr: 1900,
+            //fld: 'M',
+            //addr: 1900,
+            addr: '%MB1900',
             seq: true,
             //debug: true,
             oc: function() { 
@@ -150,8 +153,9 @@ VISU.init.comm_funkt = function() {
     //Eventliste für Meldebox lesen (Widget)
     VISU.comm.pollEvents = function() {
         VISU.comm.cx.readArrayOfStruct({
-            fld: 'M',
-            addr: 7000,
+            //fld: 'M',
+            //addr: 7000,
+            name: '.VQ_ALARMARRAY',
             def: 'VISU.comm.defEvent',
             jvar: 'VISU.anzeig.widg.meldeBox.data',
             //debug: true,
@@ -162,8 +166,9 @@ VISU.init.comm_funkt = function() {
     //Logbuch lesen
     VISU.comm.pollLog = function() {
         VISU.comm.cx.readArrayOfStruct({
-            fld: 'M',
-            addr: 8200,
+            //fld: 'M',
+            //addr: 8200,
+            name: '.VQ_ALARMLOG',
             def: 'VISU.comm.defLog',
             jvar: 'VISU.anzeig.log.anzeige.data',
             //debug: true,
@@ -175,8 +180,9 @@ VISU.init.comm_funkt = function() {
     VISU.comm.pollAussenTemp = function() {
         //Chart
         VISU.comm.cx.readArrayOfInt1Dp({
-            fld: 'M',
-            addr: 600,
+            //fld: 'M',
+            //addr: 600,
+            name: '.VQ_LOGAUSSENTEMP',
             jvar: 'VISU.anzeig.widg.aussenTempChart.data1',
             debug: false,
             oc: function() {
@@ -186,8 +192,9 @@ VISU.init.comm_funkt = function() {
         //Anzeigen
         VISU.comm.cx.readReq({ 
             // Parameter für Lesen
-            fld: 'M',
-            addr: 650,
+            //fld: 'M',
+            //addr: 650,
+            addr: '%MB650',
             seq: true,
             //Zuordnungen
             items: [{
@@ -208,8 +215,9 @@ VISU.init.comm_funkt = function() {
     VISU.comm.pollPersonenStatus = function(){
         VISU.comm.cx.readReq({
             // Parameter für Lesen
-            fld: 'M',
-            addr: 6900,
+            //fld: 'M',
+            //addr: 6900,
+            addr: '%MB6900',
             seq: true,
             //debug: true,
             //Zuordnungen
@@ -234,8 +242,9 @@ VISU.init.comm_funkt = function() {
     VISU.comm.pollSonnenZeiten = function() {
         VISU.comm.cx.readReq({ 
             // Parameter für Lesen
-            fld: 'M',
-            addr: 700,
+            //fld: 'M',
+            //addr: 700,
+            addr: '%MB700',
             seq: true,
             //debug: true,
             //Zuordnungen

@@ -13,9 +13,10 @@ VISU.init.comm_def = function() {
     //Variablenliste für Wohnungsanzeige
     VISU.comm.varRdWohnung = {
        // Parameter für Lesen
-       fld: 'M',
-       addr: 0,
-       //debug: true,
+       //fld: 'M',
+       //addr: 0,
+       addr: '%MB0',
+       debug: true,
        oc: VISU.anzeig.aktualAnzeig,
        id: 1,
        items:[{
@@ -431,8 +432,9 @@ VISU.init.comm_def = function() {
     //Variablenliste für Lesen der Rolloanwahlen
     VISU.comm.varRdRolloAnw = {
         //Parameter für Lesen
-        fld: 'M',
-        addr: 10000,
+        //fld: 'M',
+        //addr: 10000,
+        addr: '%MB10000',
         oc: VISU.button.aktualAnzeig,
         seq: true,
         //debug: true,
@@ -479,8 +481,9 @@ VISU.init.comm_def = function() {
     //Variablenliste für Schreiben der Rolloanwahlen
     VISU.comm.varWrRolloAnw = {
         //Parameter für Schreiben
-        fld: 'M',
-        addr: 10000,
+        //fld: 'M',
+        //addr: 10000,
+        addr: '%MB10000',
         oc: VISU.comm.pollRolloAnw,
         //debug: true,
         items: [{
@@ -526,8 +529,9 @@ VISU.init.comm_def = function() {
     //Variablenliste für Lesen der Raumwerte
     VISU.comm.varRdRaumWerte = {
         //Parameter für Lesen
-        fld: 'M',
-        addr: 180,
+        //fld: 'M',
+        //addr: 180,
+        addr: '%MB180',
         oc: function() {VISU.anzeig.aktualisiere(VISU.anzeig.raum);VISU.anzeig.aktualisiere(VISU.button.raumfunkt);},
         items: [{
                 jvar: 'VISU.anzeig.raum.label.data',
@@ -578,8 +582,9 @@ VISU.init.comm_def = function() {
     //Variablenliste für Lesen der Heizungsdaten
     VISU.comm.varRdHeizung = {
         //Parameter für Lesen
-        fld: 'M',
-        addr: 1000,
+        //fld: 'M',
+        //addr: 1000,
+        addr: '%MB1000',
         oc: function() {VISU.anzeig.aktualisiere(VISU.anzeig.fbh);VISU.anzeig.aktualisiere(VISU.button.fbh);},
         items: [{
                 jvar: 'VISU.anzeig.fbh.pumpeBsz.data',
@@ -648,8 +653,9 @@ VISU.init.comm_def = function() {
     //Variablenliste für Lesen der allgemeinen Einstellungen
     VISU.comm.varRdEinstell = {
         //Parameter für Lesen
-        fld: 'M',
-        addr: 1500,
+        //fld: 'M',
+        //addr: 1500,
+        addr: '%MB1500',
         oc: function() {VISU.anzeig.aktualisiere(VISU.anzeig.einstell);VISU.anzeig.aktualisiere(VISU.button.einstell);},
         items: [{
                 jvar: 'VISU.anzeig.einstell.xmasZeitEin.data',
@@ -682,8 +688,9 @@ VISU.init.comm_def = function() {
     //Variablenliste für Lesen der personenbez. Daten
     VISU.comm.varRdPersonalData = {
         //Parameter für Lesen
-        fld: 'M',
-        addr: 1729,
+        //fld: 'M',
+        //addr: 1729,
+        addr: '%MB1729',
         oc: function() {VISU.anzeig.pers.wecker.aktualisiere(); VISU.sonst.aenderePersBild();VISU.button.aktualAnzeig();},
         items: [{
                 jvar: 'VISU.anzeig.pers.index',

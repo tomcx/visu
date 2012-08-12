@@ -22,10 +22,10 @@ VISU.init.layer = function() {
                 anw: VISU.canvas.rolloAnwBg
             },
             setzeSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12000, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12000', val: 1});
             },
             entfSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12001, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12001', val: 1});
             } 
         }),
         raumbedien: VISU.Layer.erzeugeSubLayer({
@@ -38,10 +38,10 @@ VISU.init.layer = function() {
             },
             //draggable: true,
             setzeSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12004, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12004', val: 1});
             },
             entfSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12005, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12005', val: 1});
             }
         }),
         personal: VISU.Layer.erzeugeMainLayer({
@@ -49,10 +49,10 @@ VISU.init.layer = function() {
             mainLabel: 'P e r s ö n l i c h e   E i n s t e l l u n g e n',
             canvas: {},
             setzeSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12008, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12008', val: 1});
             },
             entfSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12009, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12009', val: 1});
             },
         }),
         presetsTag: VISU.Layer.erzeugeLayer({
@@ -85,10 +85,10 @@ VISU.init.layer = function() {
                 nacht: VISU.canvas.einstNachtBg
             },
             setzeSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12012, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12012', val: 1});
             },
             entfSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12013, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12013', val: 1});
             },
         }),
         log: VISU.Layer.erzeugeMainLayer({
@@ -101,10 +101,10 @@ VISU.init.layer = function() {
             mainLabel: 'F u ß b o d e n h e i z u n g',
             canvas: {},
             setzeSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12014, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12014', val: 1});
             },
             entfSperrFlag: function() {
-                VISU.comm.cx.writeBool({fld: "M", addr: 12015, val: 1});
+                VISU.comm.cx.writeBool({addr: '%MB12015', val: 1});
                 VISU.anzeig.fbh.pumpe.stop(); //Pumpenanimation ausschalten
             },
         }),

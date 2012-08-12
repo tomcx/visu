@@ -23,6 +23,8 @@ VISU.init.starten = function() {
     VISU.init.button();
     VISU.init.comm_def();
     
+    try {VISU.comm.cx.logSymbols();} catch(e) {};
+    
     //Polling starten
     VISU.anzeig.visinfo.data = 'Warte auf Daten ...';
     VISU.comm.pollZyk1();

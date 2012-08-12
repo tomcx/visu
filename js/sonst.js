@@ -66,14 +66,16 @@ VISU.init.sonst = function() {
                 break;
             case 'speichern':
                 VISU.comm.cx.writeReq({
-                    fld: 'M',
-                    addr: 10525,
+                    //fld: 'M',
+                    //addr: 10525,
+                    addr: '%MB10525',
                     debug: true,
                     ocd: 500,
                     oc: function() {
                         VISU.comm.cx.readArrayOfStruct({
-                            fld: 'M',
-                            addr: 2000,
+                            //fld: 'M',
+                            //addr: 2000,
+                            name: '.VQ_ZEITEN4W',
                             def: 'VISU.comm.defPersTagesDaten',
                             jvar: 'VISU.anzeig.pers.zeitLeiste.data',
                             //debug: true,
@@ -105,7 +107,7 @@ VISU.init.sonst = function() {
     
     VISU.sonst.oeffneZeitEinstellung = function(tagesIndex) {
         
-        VISU.comm.cx.writeByte({fld:'M',addr:10508,val:tagesIndex,ocd:500,oc:VISU.comm.pollZeitEinstell});
+        VISU.comm.cx.writeByte({addr:'%MB10508',val:tagesIndex,ocd:500,oc:VISU.comm.pollZeitEinstell});
 
         if (!VISU.layer.zeiteinst.eingeblendet) {
             VISU.layer.zeiteinst.blendeEin();
@@ -117,7 +119,7 @@ VISU.init.sonst = function() {
         
         switch(p) {
             case 't':
-                VISU.comm.cx.readArrayOfString({fld:'M',addr:6000, debug:true, strlen:19, jvar: 'VISU.layer.presetsTag.presets',oc:
+                VISU.comm.cx.readArrayOfString({name: '.VQ_NAMENTAGESPRESETS', debug:true, strlen:19, jvar: 'VISU.layer.presetsTag.presets',oc:
                     function(){
                         for (var i = 0; i < 10; i++) {
                             VISU.button.pers['tagesPreset' + (i + 1)].text.textContent = VISU.layer.presetsTag.presets[i];
@@ -127,7 +129,7 @@ VISU.init.sonst = function() {
                 VISU.layer.presetsTag.blendeEin();
                 break;
             case 'w':    
-                VISU.comm.cx.readArrayOfString({fld:'M',addr:6200, debug:true, strlen:19, jvar: 'VISU.layer.presetsWoche.presets',oc:
+                VISU.comm.cx.readArrayOfString({name: '.VQ_NAMENWOCHENPRESETS', debug:true, strlen:19, jvar: 'VISU.layer.presetsWoche.presets',oc:
                     function(){
                         for (var i = 0; i < 10; i++) {
                             VISU.button.pers['wochenPreset' + (i + 1)].text.textContent = VISU.layer.presetsWoche.presets[i];
@@ -143,13 +145,12 @@ VISU.init.sonst = function() {
     
     VISU.sonst.raumwahl = function(raum) {
         if (! VISU.layer.raumbedien.gesperrt) {
-            VISU.comm.cx.writeByte({fld: 'M', addr:10100, val:raum, ocd: 500,oc: function() {
+            VISU.comm.cx.writeByte({addr:'%MB10100', val:raum, ocd: 500,oc: function() {
                     
                     VISU.comm.cx.readReq(VISU.comm.varRdRaumWerte);
                     
                     VISU.comm.cx.readArrayOfInt1Dp({
-                        fld: "M",
-                        addr: 500,
+                        name: '.VQ_LOGRAUMISTTEMP',
                         jvar: 'VISU.anzeig.raum.chart.data1',
                         debug: false,
                         oc: function() {
@@ -185,19 +186,19 @@ VISU.init.sonst = function() {
                 break;
             case 2:
                 //Personenbezogenen Daten
-                VISU.comm.cx.readBool({fld:"M",addr:139,jvar:'VISU.layer.personal.gesperrt',oc: 
+                VISU.comm.cx.readBool({addr:'%MB139',jvar:'VISU.layer.personal.gesperrt',oc: 
                     function(){
                         if (!VISU.layer.personal.gesperrt) {
                         
                             //Zeitleiste auf akt.Tag setzen
                             VISU.comm.cx.writeByte({
-                                fld: 'M',
-                                addr: 10524,
+                                //fld: 'M',
+                                addr: '%MB10524',
                                 val: 1
                             }); //Schaltpunkt 'Wecken' anwählen
                             VISU.comm.cx.writeByte({
-                                fld: 'M',
-                                addr: 10500,
+                                //fld: 'M',
+                                addr: '%MB10500',
                                 val: 1,
                                 ocd: 500,
                                 oc: VISU.comm.pollPersDaten
@@ -216,7 +217,7 @@ VISU.init.sonst = function() {
                 break;
             case 3:
                 //Einstellungen
-                VISU.comm.cx.readBool({fld:"M",addr:140,jvar:'VISU.layer.einstell.gesperrt',oc: 
+                VISU.comm.cx.readBool({addr:'%MB140',jvar:'VISU.layer.einstell.gesperrt',oc: 
                     function(){
                         if ( ! VISU.layer.einstell.gesperrt) {
                             VISU.layer.einstell.blendeEin();
@@ -235,8 +236,8 @@ VISU.init.sonst = function() {
             case 5:
                 //Fußbodenheizung, keine Geöffnet-Abfrage da Update-Zyklus 1s
                 VISU.comm.cx.readArrayOfString({
-                    fld: 'M',
-                    addr: 1050,
+                    //fld: 'M',
+                    name: '.VQ_STELLANTRDATEN',
                     strlen: 2,
                     jvar: 'VISU.anzeig.fbh.hk.typ'
                 });
