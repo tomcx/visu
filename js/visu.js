@@ -32,8 +32,7 @@ var VISU = {
     
     //Platzhalter für Timeouts
     timeout: {}
-}
-
+};
 
 /*
  * Konstruktor und Fabrikmethoden, um binäre Anzeigen (Wechsel zwischen
@@ -46,49 +45,49 @@ VISU.AnzeigeBinaer = function(id, bild1, bild0) {
     this.bild0 = bild0;
     this.bild1 = bild1;
     this.data = false;
-}
+};
 
 // Bildwechsel
 VISU.AnzeigeBinaer.prototype.aktualisiere = function() {
     this.element.src = (this.data ? this.bild1 : this.bild0).src;
-}
+};
 
 //Fabrikmethoden
 VISU.AnzeigeBinaer.erzeugeFensterWaag = function(id){
     return new VISU.AnzeigeBinaer(id, VISU.bild.fensterWaagGeschl, 
     VISU.bild.fensterWaagOffen);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeFensterSenkr = function(id){
     return new VISU.AnzeigeBinaer(id, VISU.bild.fensterSenkrGeschl,
     VISU.bild.fensterSenkrOffen);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeTuerWaag = function(id){
     return new VISU.AnzeigeBinaer(id, VISU.bild.tuerWaagGeschl,
     VISU.bild.tuerWaagOffen);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeTuerSenkr = function(id){
     return new VISU.AnzeigeBinaer(id, VISU.bild.tuerSenkrGeschl,
     VISU.bild.tuerSenkrOffen);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeSteckd = function(id) {
     return new VISU.AnzeigeBinaer(id, VISU.bild.steckdEin, VISU.bild.steckdAus);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeSteckd1 = function(id) {
     return new VISU.AnzeigeBinaer(id, VISU.bild.steckd1Ein, VISU.bild.steckd1Aus);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeSteckd2 = function(id) {
     return new VISU.AnzeigeBinaer(id, VISU.bild.steckd2Ein, VISU.bild.steckd2Aus);
-}
+};
 
 VISU.AnzeigeBinaer.erzeugeLicht = function(id) {
     return new VISU.AnzeigeBinaer(id, VISU.bild.lichtEin, VISU.bild.lichtAus);
-}
+};
 
 
 /*
@@ -104,17 +103,17 @@ VISU.AnzeigeTextArray = function(id, texte) {
         self.data *= 1; //Falls boolsche Werte übergeben wurden
         self.element.data = texte[self.data];
     }
-}
+};
 
 VISU.AnzeigeTextArray.erzeuge = function(id, texte) {
     return new VISU.AnzeigeTextArray(id, texte);
-}
+};
 VISU.AnzeigeTextArray.erzeugeAktDeakt = function(id) {
     return new VISU.AnzeigeTextArray(id, ['deaktiviert', 'aktiviert']);
-}
+};
 VISU.AnzeigeTextArray.erzeugeAnwAbw = function(id) {
     return new VISU.AnzeigeTextArray(id, ['abwesend', 'anwesend']);
-}
+};
 
 /*
  * Funktion zum Ansteuern von Textanzeigen mit Wechsel der CSS-Klassen
@@ -130,14 +129,14 @@ VISU.AnzeigeTextKlasse = function(id, klassen) {
         self.data *= 1; //Falls boolsche Werte übergeben wurden
         self.element.className = klassen[self.data];
     }
-}
+};
 
 VISU.AnzeigeTextKlasse.erzeuge = function(id, klassen) {
     return new AnzeigeTextKlasse(id, klassen);
-}
+};
 VISU.AnzeigeTextKlasse.erzeugeRotGruen = function(id) {
     return new VISU.AnzeigeTextKlasse(id, ['statustext_rot', 'statustext_gruen']);
-}
+};
 
 
 /*
@@ -146,7 +145,7 @@ VISU.AnzeigeTextKlasse.erzeugeRotGruen = function(id) {
  */
 VISU.erzeugeTextAnzeige = function(id) {
     return document.getElementById(id).firstChild;
-}
+};
 
 
 /*
@@ -173,10 +172,16 @@ VISU.AnzeigeRollo = function(id, anw) {
 	this.modusAnzeige = _spanElem[3];
     this.xmasAnzeige = _spanElem[4];
     
-    this.element.onmousedown = function() {
-        self.anwaehlen();
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        this.element.onmousedown = function() {
+            self.anwaehlen();
+        }
     }
-}
+    
+    
+};
 
 VISU.AnzeigeRollo.prototype.aktualisiere = function() {
     this.balkenAnzeige.style.height = this.pos + '%';
@@ -189,7 +194,7 @@ VISU.AnzeigeRollo.prototype.aktualisiere = function() {
     else if (this.modus == '122') 
             this.fahrAnzeige.src = VISU.bild.rolloAb.src;
     else this.fahrAnzeige.src = VISU.bild.rolloSteht.src;
-}
+};
 
 VISU.AnzeigeRollo.prototype.modi = {
     
@@ -207,7 +212,7 @@ VISU.AnzeigeRollo.prototype.modi = {
     '122': 'Ab',
     '130': 'Steht',
     '135': 'TagPos'
-}
+};
 
 VISU.AnzeigeRollo.prototype.anwaehlen = function() {
     if ( ! VISU.layer.rollobedien.gesperrt) {
@@ -230,11 +235,11 @@ VISU.AnzeigeRollo.prototype.anwaehlen = function() {
         }
     }
     else VISU.sonst.alert('Rollobedienung von anderem Terminal geöffnet !');
-}
+};
 
 VISU.AnzeigeRollo.erzeugeAnzeige = function(id, anw) {
 	return new VISU.AnzeigeRollo(id, anw);
-}
+};
 
 
 /*
@@ -258,6 +263,8 @@ VISU.AnzeigeBalken = function(param) {
     var element = document.getElementById(param.id);
     var ctx = element.getContext('2d');
     
+    var tb, lastX, i, x, x2, j, sollAnfang, sollEnde, endeIstBalken, startSollZeiger;
+    
 	ctx.font = "9px helvetica";    //Schriftart Skalenbeschriftung
     ctx.strokeStyle = 'rgba(255,255,255,0.6)';
     ctx.lineWidth = 0.5;
@@ -279,7 +286,7 @@ VISU.AnzeigeBalken = function(param) {
         }
         
         //Canvas löschen        
-        ctx.clearRect(0, 0, element.offsetWidth, element.offsetHeight)
+        ctx.clearRect(0, 0, element.offsetWidth, element.offsetHeight);
         
         //Beginn Bargraph zeichnen
         ctx.save();
@@ -292,20 +299,20 @@ VISU.AnzeigeBalken = function(param) {
         ctx.fillRect(0, 0, param.laenge + korr*2, param.breite);
 
         //Istwert-Skala zeichnen
-        var tb = param.laenge / param.hauptTeiler;
-        var lastX = 0;
+        tb = param.laenge / param.hauptTeiler;
+        lastX = 0;
         ctx.beginPath();
         ctx.fillStyle = 'rgba(255,255,255,0.5)'; //für Text
-        for (var i = 0; i <= param.hauptTeiler; i++) {
-            var x = i * tb;
+        for (i = 0; i <= param.hauptTeiler; i++) {
+            x = i * tb;
             ctx.moveTo(x +  korr, korr);
             ctx.lineTo(x + korr, hauptStrichLaenge + korr);
             
             ctx.fillText((param.maxWert - param.minWert) / param.hauptTeiler * i + param.minWert, x + textOffsetX, textOffsetY);
             
             if (i > 0 && param.unterTeiler > 1) {
-                for (var j = 1; j < param.unterTeiler; j++) {
-                    var x2 = (x - lastX) / param.unterTeiler;
+                for (j = 1; j < param.unterTeiler; j++) {
+                    x2 = (x - lastX) / param.unterTeiler;
                     ctx.moveTo(x + korr - x2*j, korr);
                     ctx.lineTo(x + korr - x2*j, unterStrichLaenge + korr);
                 }
@@ -318,8 +325,8 @@ VISU.AnzeigeBalken = function(param) {
         //Begrenzung Sollwert zeichnen
         if (param.anzSoll) {
             ctx.fillStyle = 'rgba(255,255,255,0.1)';
-            var sollAnfang = param.laenge * (param.minSoll - param.minWert) / (param.maxWert - param.minWert);
-            var sollEnde = param.laenge * (param.maxSoll - param.minWert) / (param.maxWert - param.minWert);
+            sollAnfang = param.laenge * (param.minSoll - param.minWert) / (param.maxWert - param.minWert);
+            sollEnde = param.laenge * (param.maxSoll - param.minWert) / (param.maxWert - param.minWert);
             ctx.fillRect(sollAnfang, param.breite - breiteSollbereich,
                          sollEnde - sollAnfang + korr * 2, breiteSollbereich);
             
@@ -331,14 +338,14 @@ VISU.AnzeigeBalken = function(param) {
         
         //Istwertbalken zeichnen
         ctx.fillStyle = 'rgba(120,150,160,0.5)';
-        var endeIstBalken = param.laenge * (this.istData - param.minWert) / (param.maxWert - param.minWert);
+        endeIstBalken = param.laenge * (this.istData - param.minWert) / (param.maxWert - param.minWert);
         ctx.fillRect(0, (param.breite - breiteIstBalken) / 2, endeIstBalken + korr * 2, breiteIstBalken);
         
         
         //Sollwertzeiger zeichnen
         ctx.beginPath();
         ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        var startSollZeiger = param.laenge * (this.sollData - param.minWert) / (param.maxWert - param.minWert);
+        startSollZeiger = param.laenge * (this.sollData - param.minWert) / (param.maxWert - param.minWert);
         ctx.moveTo(startSollZeiger + korr, param.breite + 1);
         ctx.lineTo(startSollZeiger + sollZeiger / 2 + korr, param.breite + 1 + sollZeiger + korr);
         ctx.lineTo(startSollZeiger - sollZeiger / 2 + korr, param.breite + 1 + sollZeiger + korr);
@@ -348,11 +355,11 @@ VISU.AnzeigeBalken = function(param) {
         
         ctx.restore();
     }    
-}
+};
 
 VISU.AnzeigeBalken.erzeugeAnzeige = function(param) {
     return new VISU.AnzeigeBalken(param);
-}
+};
 
 
 /*
@@ -397,14 +404,22 @@ VISU.AnzeigeChart = function(param){
     this._lineWidthGitter = 0.3;
     this._lineWidthGraph = 0.6;
     
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
+    }
+    
     this.element.onmousedown = function(e) {
         e.preventDefault();
         if (self.param.zoom > 0) self.zoom();
-    }
+    };
     this.aktualisiere(); //bei Objekterstell. 1 mal zeichnen
-}
+};
 
 VISU.AnzeigeChart.prototype.aktualisiere = function() {
+        var th, th2, i, x, y, beschrY, jetzt, stunde, tb, graphOffset;
+    
         this.ctx.save();
         
         this.ctx.clearRect(0, 0, this.element.width, this.element.height);
@@ -450,15 +465,15 @@ VISU.AnzeigeChart.prototype.aktualisiere = function() {
         this.ctx.lineWidth = this._lineWidthGitter;
         this.ctx.strokeStyle = this._styleGitter;
         this.ctx.beginPath();
-        var th = this.param.hoehe / this.teilerY;
-        for (var i = 1; i < this.teilerY; i++) {
-            var y = i * th;
+        th = this.param.hoehe / this.teilerY;
+        for (i = 1; i < this.teilerY; i++) {
+            y = i * th;
             this.ctx.moveTo(this._korr, -y - this._korr);
             this.ctx.lineTo(this.param.laenge + this._korr, -y - this._korr);
             
             //Skala vorn
             this.ctx.fillStyle = this.param.styleY1;
-            var beschrY = (this.maxY - this.minY) / this.teilerY * i + this.minY;
+            beschrY = (this.maxY - this.minY) / this.teilerY * i + this.minY;
             beschrY = String(beschrY);
             if (beschrY.length == 1) 
                 beschrY = "  " + beschrY;
@@ -489,9 +504,9 @@ VISU.AnzeigeChart.prototype.aktualisiere = function() {
         this.ctx.save();
         this.ctx.beginPath();
         this.ctx.strokeStyle = this._styleSubGitter;
-        var th2 = this.param.hoehe / (this.teilerY * this.subTeilerY);
-        for (var i = 1; i < this.teilerY * this.subTeilerY; i++) {
-            var y = i * th2;
+        th2 = this.param.hoehe / (this.teilerY * this.subTeilerY);
+        for (i = 1; i < this.teilerY * this.subTeilerY; i++) {
+            y = i * th2;
             this.ctx.moveTo(this._korr, -y - this._korr);
             this.ctx.lineTo(this.param.laenge + this._korr, -y - this._korr);
         }
@@ -501,17 +516,17 @@ VISU.AnzeigeChart.prototype.aktualisiere = function() {
         //X-Teilung
         this.ctx.fillStyle = this.param.styleText; //für Text
         this.ctx.beginPath();
-        var jetzt = new Date();
-        var stunde = jetzt.getHours() + 1;
-        var tb = this.param.laenge / this.param.teilerX;
+        jetzt = new Date();
+        stunde = jetzt.getHours() + 1;
+        tb = this.param.laenge / this.param.teilerX;
         
-        for (var i = 0; i <= this.param.teilerX - 1; i = i + 2) {
+        for (i = 0; i <= this.param.teilerX - 1; i = i + 2) {
             if (stunde == 24) 
                 stunde = 0;
             else 
                 if (stunde == 25) 
                     stunde = 1;
-            var x = i * tb;
+            x = i * tb;
             this.ctx.moveTo(x + this._korr, -this._korr);
             this.ctx.lineTo(x + this._korr, -this.param.hoehe - this._korr);
             this.ctx.fillText(stunde, x + this._textXOffsetX, -this._textXOffsetY);
@@ -526,7 +541,7 @@ VISU.AnzeigeChart.prototype.aktualisiere = function() {
         this.ctx.shadowBlur = 5;
         this.ctx.shadowColor = "rgba(0, 0, 0, 1)";
         */
-        var graphOffset = this.param.laenge / this.param.teilerX;
+        graphOffset = this.param.laenge / this.param.teilerX;
         this.ctx.lineWidth = this._lineWidthGraph;
         
         this.ctx.beginPath();
@@ -557,9 +572,12 @@ VISU.AnzeigeChart.prototype.aktualisiere = function() {
             this.ctx.stroke();
         }
         this.ctx.restore();   
-}
+};
     
 VISU.AnzeigeChart.prototype.zoom = function() {
+    
+    var i, data1min, data1max;
+    
     if (this.zoomed === true) {
         this.minY = this.param.minY;
         this.maxY = this.param.maxY;
@@ -572,9 +590,10 @@ VISU.AnzeigeChart.prototype.zoom = function() {
     else {
         //Die Zoom-Werte werden nur für den 1. Graph berechnet
         this.zoomed = true;
-        var data1min = this.data1[0], data1max = this.data1[0];
+        data1min = this.data1[0];
+        data1max = this.data1[0];
         //Min-/Maxwerte finden
-        for (var i = 1; i < this.data1.length; i++) {
+        for (i = 1; i < this.data1.length; i++) {
             if (this.data1[i] < data1min) {
                 data1min = this.data1[i];
             }
@@ -609,11 +628,11 @@ VISU.AnzeigeChart.prototype.zoom = function() {
         this.subTeilerY = this.param.zoomSubTeilerY;
     }
     this.aktualisiere(); 
-}
+};
 
 VISU.AnzeigeChart.erzeugeAnzeige = function(param) {
     return new VISU.AnzeigeChart(param);
-}
+};
 
 
 /*
@@ -631,58 +650,62 @@ VISU.Button = function(id, funkt, wert0, wert1, bild0, bild1) {
     this.funkt = funkt;
 
     //Handler
-    this.element.onmousedown = function(e) {
-        e.preventDefault();
-        self.down();
-    }
-    this.element.onmouseup = function(e) {
-        e.preventDefault();
-        self.up();
-    }
-	this.element.onmouseout = function(e) {
-        e.preventDefault();
-        self.out();
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        this.element.onmousedown = function(e) {
+            e.preventDefault();
+            self.down();
+        };
+        this.element.onmouseup = function(e) {
+            e.preventDefault();
+            self.up();
+        };
+    	this.element.onmouseout = function(e) {
+            e.preventDefault();
+            self.out();
+        };
     }
     
-}
+};
 
 VISU.Button.prototype.down = function() {
     this.element.style.backgroundImage = "url(" + this.bildBetaet.src + ")";
     if (this.wert1 != undefined && typeof this.funkt == 'function') this.funkt(this.wert1);
-    }
+};
 
 VISU.Button.prototype.up = function() { 
     this.element.style.backgroundImage = "url(" + this.bildNormal.src + ")";
     if (this.wert0 != undefined && typeof this.funkt == 'function') this.funkt(this.wert0);
-    }
+};
   
 VISU.Button.prototype.out = function() { 
     this.element.style.backgroundImage = "url(" + this.bildNormal.src + ")";
-    }
+};
 
 VISU.Button.erzeugeStdButt = function(id, funkt, wert0, wert1) {
     return new VISU.Button(id, funkt, wert0, wert1, 
     VISU.bild.buttonStd, VISU.bild.buttonStdPressed);
-}
+};
 
 VISU.Button.erzeugeBreitenButt = function(id, funkt, wert0, wert1) {
     return new VISU.Button(id, funkt, wert0, wert1, 
     VISU.bild.buttonBreit, VISU.bild.buttonBreitPressed);
-}
+};
 
 VISU.Button.erzeugeTouchfeld = function(id, funkt, bild1, wert0, wert1) {
     return new VISU.Button(id, funkt, wert0, wert1,
     VISU.bild.transp, bild1);
-}
+};
 
 VISU.Button.erzeugeCustomButton = function(id, funkt, bild0, bild1, wert0, wert1) {
     return new VISU.Button(id, funkt, wert0, wert1, bild0, bild1);
-}
+};
 
 VISU.Button.erzeugeCloseButton = function(id, funkt, wert0, wert1) {
     return new VISU.Button(id, funkt, wert0, wert1, 
     VISU.bild.iconClose, VISU.bild.iconCloseClicked);
-}
+};
 
 
 /*
@@ -703,37 +726,45 @@ VISU.ButtonAnzeige = function(id, funkt, wert0, wert1, bild0, bild0clicked, bild
     this.anzeige = false;
     this.clicked = false;
 
+
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
+    }
+    
+    
     //Handler
     this.element.onmousedown = function(e) {
         e.preventDefault();
         self.down();
-    }
+    };
     this.element.onmouseup = function(e) {
         e.preventDefault();
         self.up();
-    }
+    };
 	this.element.onmouseout = function(e) {
         e.preventDefault();
         self.out();
-    }
-}
+    };
+};
 
 VISU.ButtonAnzeige.prototype.down = function() {
     this.element.style.backgroundImage = "url(" + (this.anzeige ? this.bildEinBetaet : this.bildBetaet).src + ")";
     if (this.wert1 != undefined && typeof this.funkt == 'function') this.funkt(this.wert1);
     this.clicked = true;
-    }
+};
 
 VISU.ButtonAnzeige.prototype.up = function() { 
     this.element.style.backgroundImage = "url(" + (this.anzeige ? this.bildEin : this.bildNormal).src + ")";
     if (this.wert0 != undefined && typeof this.funkt == 'function') this.funkt(this.wert0);
     this.clicked = false;
-    }
+};
   
 VISU.ButtonAnzeige.prototype.out = function() { 
     this.element.style.backgroundImage = "url(" + (this.anzeige ? this.bildEin : this.bildNormal).src + ")";
     this.clicked = false;
-    }
+};
     
 VISU.ButtonAnzeige.prototype.aktualisiere = function() {
     if (this.clicked === false) {
@@ -742,12 +773,12 @@ VISU.ButtonAnzeige.prototype.aktualisiere = function() {
     else {
         this.element.style.backgroundImage = "url(" + (this.anzeige ? this.bildEinBetaet : this.bildBetaet).src + ")";
     }
-}
+};
 
 VISU.ButtonAnzeige.erzeugeStdButt = function(id, funkt, wert0, wert1) {
     return new VISU.ButtonAnzeige(id, funkt, wert0, wert1, 
     VISU.bild.buttonStd, VISU.bild.buttonStdPressed, VISU.bild.buttonStdEin, VISU.bild.buttonStdEinPressed);
-}
+};
 
 
 /*
@@ -774,49 +805,55 @@ VISU.ButtonToggle = function(id, typ, funkt, wert0, wert1, bild0, bildclick, bil
 			self.setzeEin();
 		}
         else self.setzeAus();
-    }
+    };
     
     this.release = function(e) {
         e.preventDefault();
         self.aktualisiere();
+    };
+    
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
     }
     
     //Handler
     this.element.onmousedown = this.toggle;
     this.element.onmouseup = this.release;
-}
+};
 
 VISU.ButtonToggle.prototype.setzeEin = function() {
     if (this.wert1 != undefined && typeof this.funkt == 'function') this.funkt(this.wert1);
-}
+};
 
 VISU.ButtonToggle.prototype.setzeAus = function() {
     if (this.wert0 != undefined && typeof this.funkt == 'function') this.funkt(this.wert0);
-}
+};
 
 VISU.ButtonToggle.prototype.aktualisiere = function() {
     this.element.style.backgroundImage = "url(" + (this.anzeige ? this.bildEin : this.bildAus).src + ")";
-}
+};
 
 VISU.ButtonToggle.erzeugePfeilRunterButt = function(id, funkt, wert0, wert1) {
     return new VISU.ButtonToggle(id, 1, funkt, wert0, wert1, 
     VISU.bild.pfeilRunter, VISU.bild.pfeilRunterClicked, VISU.bild.pfeilRunterAngew);
-}
+};
 
 VISU.ButtonToggle.erzeugePfeilRechtsButt = function(id, funkt, wert0, wert1) {
     return new VISU.ButtonToggle(id, 1, funkt, wert0, wert1, 
     VISU.bild.pfeilRechts, VISU.bild.pfeilRechtsClicked, VISU.bild.pfeilRechtsAngew);
-}
+};
 
 VISU.ButtonToggle.erzeugePfeilHochButt = function(id, funkt, wert0, wert1) {
     return new VISU.ButtonToggle(id, 1, funkt, wert0, wert1, 
     VISU.bild.pfeilHoch, VISU.bild.pfeilHochClicked, VISU.bild.pfeilHochAngew);
-}
+};
 
 VISU.ButtonToggle.erzeugeStdButt = function(id, funkt, wert0, wert1) {
     return new VISU.ButtonToggle(id, 2, funkt, wert0, wert1, 
     VISU.bild.buttonStd, VISU.bild.buttonStdPressed, VISU.bild.buttonStdEin);
-}
+};
 
 
 /*
@@ -831,38 +868,44 @@ VISU.PicButton = function(id, funkt, wert0, wert1, bild) {
     this.wert1 = wert1;
     this.funkt = funkt;
 
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
+    }
+
     //Handler
     this.element.onmousedown = function(e) {
         e.preventDefault();
         self.down();
-    }
+    };
     this.element.onmouseup = function(e) {
         e.preventDefault();
         self.up();
-    }
+    };
 	this.element.onmouseout = function(e) {
         e.preventDefault();
         self.out();
-    }
-}
+    };
+};
 
 VISU.PicButton.prototype.down = function() {
     this.element.style.opacity = 1;
     if (this.wert1 != undefined && typeof this.funkt == 'function') this.funkt(this.wert1);
-    }
+};
 
 VISU.PicButton.prototype.up = function() { 
     this.element.style.opacity = 0.6;
     if (this.wert0 != undefined && typeof this.funkt == 'function') this.funkt(this.wert0);
-    }
+};
   
 VISU.PicButton.prototype.out = function() { 
     this.element.style.opacity = 0.6;
-    }
+};
 
 VISU.PicButton.erzeuge = function(id, funkt, wert0, wert1, bild) {
     return new VISU.PicButton(id, funkt, wert0, wert1, bild);
-}
+};
 
 
 /*
@@ -870,13 +913,16 @@ VISU.PicButton.erzeuge = function(id, funkt, wert0, wert1, bild) {
  */
 // Konstruktor
 VISU.Layer = function(param){
-    var self = this;
+    var self = this,
+    l, i, elem, mPosMove;
+    
     this.param = param;
     this.eingeblendet = false;
     this.gesperrt = false;
     this.pressed = false;
     this.element = document.getElementById(param.id);
     this.dragBar = document.getElementById(param.id + '_dragbar');
+          
     this.blendeEin = function() {
         self.eingeblendet = true;
         if (typeof self.param.setzeSperrFlag == 'function') {
@@ -886,7 +932,7 @@ VISU.Layer = function(param){
         self.element.style.visibility = 'visible';            
         self.setzeZIndex('200');
         fade(self.element, 0, 1, 20, 0, styleLinear);
-    }
+    };
     
     this.blendeAus = function() {
         fade(self.element, 1, 0, 20, 0, styleLinear, false, null, 
@@ -899,12 +945,12 @@ VISU.Layer = function(param){
                 self.eingeblendet = false;
             }
         )   
-    }
+    };
     
     this.setzeZIndex = function(index) {
         if (self.element.style.zIndex != index && self.dragBar !== null) {
-            for (var l in VISU.layer) {
-                var i = parseInt(VISU.layer[l].element.style.zIndex);
+            for (l in VISU.layer) {
+                i = parseInt(VISU.layer[l].element.style.zIndex);
                 
                 if (VISU.layer[l].element.style.zIndex == '0') {
                     return;
@@ -918,12 +964,12 @@ VISU.Layer = function(param){
                 self.element.style.zIndex = index;
             }
         }
-    }
+    };
     
     //Canvas
     if (param.canvas) {
         //Hintergründe zeichnen
-        for (var elem in param.canvas) {
+        for (elem in param.canvas) {
             //Dragbar bei Widgets;
             if (elem == 'bar') {
                 if (param.mainLabel) {
@@ -941,121 +987,146 @@ VISU.Layer = function(param){
         }
     }
     
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
+    }
+    
     this.element.onmousedown = function(e) {
             e.preventDefault();
             self.setzeZIndex('200');
-    }
+    };
     
     this.element.onmouseup = function(e) {
             e.preventDefault();
             setTimeout(saveKoord, 2000);
-    }
+    };
     
     //Koordinaten speichern
     var saveKoord = function() {
-            localStorage[param.id + '_X'] = self.element.offsetLeft;
-            localStorage[param.id + '_Y'] = self.element.offsetTop;
-            for (var i in VISU.layer) {
+            localStorage[param.id + '_transX'] = self.param.transX;
+            localStorage[param.id + '_transY'] = self.param.transY;
+            for (i in VISU.layer) {
                 localStorage[VISU.layer[i].param.id + '_Z'] = document.getElementById(VISU.layer[i].param.id).style.zIndex;
             }
-    }
+    };
     
     //Make Layer draggable
     if (this.dragBar !== null) {
-        this.move = function(mausX, mausY) {
-            var versatzY = this.startElementY + mausY - this.startMausY;
-            this.element.style.top = (param.magnetic && versatzY + this.dragBar.offsetTop + 3 < 0 ? -(this.dragBar.offsetTop + 3) : versatzY) + 'px';
-            this.element.style.left = (this.startElementX + mausX - this.startMausX) + 'px';
-            
-            //var versatzY = mausY - this.startMausY;
-            //this.element.style.webkitTransform = 'translate(' + (mausX - this.startMausX) + 'px,' + (param.magnetic && this.dragBar.offsetTop + 3 < 0 ? 0 : versatzY) + 'px)';
-            //this.element.style.MozTransform = 'translate(' + (mausX - this.startMausX) + 'px,' + (versatzY) + 'px)';
-        }
         
-        var mPosMove = function(e) {
+        this.move = function(mausX, mausY) {
+            this.versatzY = mausY - this.startMausY + this.param.transY;
+            this.versatzX = mausX - this.startMausX + this.param.transX;
+            //console.log(this.versatzY + " , " +  this.param.transY);
+            this.element.style.MozTransform = 'translate(' + this.versatzX + 'px,' + this.versatzY + 'px)';
+            this.element.style.webkitTransform = 'translate(' + this.versatzX + 'px,' + this.versatzY + 'px)';
+        };
+        
+        mPosMove = function(e) {
                 e.preventDefault();
-                e.stopPropagation();
+                //e.stopPropagation();
                 self.move(e.pageX, e.pageY);   
+        };
+        
+        if (VISU.isMobileDevice) {
+            
+        } else {
+            
         }
         
         this.dragBar.onmousedown = function(e) {
             e.preventDefault();
             //Dragging
-            self.startElementX = self.element.offsetLeft;
-            self.startElementY = self.element.offsetTop;
-            self.startMausX = e.pageX;
-            self.startMausY = e.pageY;
             document.addEventListener("mousemove", mPosMove, true);
-        }
+            self.startMausX = e.pageX;
+            self.startMausY = e.pageY;            
+        };
         
         this.dragBar.onmouseup = function(e){
             e.preventDefault();
             document.removeEventListener("mousemove", mPosMove, true);
+            //self.param.transX = self.versatzX;
+            //self.param.transY = self.versatzY;
+            
+            self.param.transX = isNaN(self.versatzX) ? 0 : self.versatzX;
+            self.param.transY = isNaN(self.versatzY) ? 0 : self.versatzY;
+            //console.log(self.versatzY);
+            self.element.style.MozTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
+            self.element.style.webkitTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
+            
             //Widgets an oberen Rand ziehen
             if (param.magnetic && self.element.offsetTop < 0) {
                 move(self.element, self.element.offsetTop, self.element.offsetLeft, -(self.dragBar.offsetTop + 3), self.element.offsetLeft, 10, 0, styleSin);
-            };
-        }
+            }
+        };
         /*
         this.element.onmouseout = function(e){
             e.preventDefault();
             e.stopPropagation();
             document.removeEventListener("mousemove", mPosMove, true);
         }
-        */ 
+        */
+       
+       (function() {
+           self.element.style.MozTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
+           self.element.style.webkitTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
+       })();
     }
-}
+};
 
 VISU.Layer.erzeugeLayer = function(param) {
     return new VISU.Layer(param);
-}
+};
 
 VISU.Layer.erzeugeMainLayer = function(param) {
     //Canvas-BG wegen Schatten an den Anfang von param.canvas setzen
-    var canvas = param.canvas;
+    var canvas = param.canvas,
+        c, w;
     param.canvas = {};
     param.canvas.bg = VISU.canvas.mainLayerBg;
-    for (var c in  canvas) {
+    for (c in  canvas) {
         param.canvas[c] = canvas[c];
     }
     //gespeicherte XYZ-Werte setzen
-    var w = document.getElementById(param.id);
-    w.style.left = localStorage[param.id + '_X'] + 'px';
-    w.style.top = localStorage[param.id + '_Y'] + 'px';
-    w.style.zIndex = localStorage[param.id + '_Z'];
+    param.transX = isNaN(localStorage[param.id + '_transX']) ? 0 : parseInt(localStorage[param.id + '_transX'], 10);
+    param.transY = isNaN(localStorage[param.id + '_transY']) ? 0 : parseInt(localStorage[param.id + '_transY'], 10);
+    document.getElementById(param.id).style.zIndex = localStorage[param.id + '_Z'];
     return new VISU.Layer(param);
-}
+};
 
 VISU.Layer.erzeugeSubLayer = function(param) {
      //Canvas-BG wegen Schatten an den Anfang von param.canvas setzen
-    var canvas = param.canvas;
+    var canvas = param.canvas,
+    c;
     param.canvas = {};
     param.canvas.bg = VISU.canvas.subLayerBg;
-    for (var c in  canvas) {
+    for (c in  canvas) {
         param.canvas[c] = canvas[c];
     }
     return new VISU.Layer(param);
-}
+};
 
 VISU.Layer.erzeugeWidget = function(param) {
     //Größe der Hintergrundzeichnung an Canvas anpassen
-    var e = document.getElementById(param.id + '_canvas');
+    var e = document.getElementById(param.id + '_canvas'),
+    widgDragBarTop, widgDragBarLeft, b, w;
+    
     param.canvas.bg.width = e.offsetWidth - 10;             //-10 wegen Platz für Schatten
     param.canvas.bg.height = e.offsetHeight - 10;           //-10 wegen Platz für Schatten
     //X- und Y-Positionen für Dragbar
-    var widgDragBarTop = (param.canvas.bg.y + param.canvas.bg.height - 5); 
-    var widgDragBarLeft = (param.canvas.bg.x + param.canvas.bg.width - 20);
-    var b = document.getElementById(param.id + '_dragbar');
+    widgDragBarTop = (param.canvas.bg.y + param.canvas.bg.height - 5); 
+    widgDragBarLeft = (param.canvas.bg.x + param.canvas.bg.width - 20);
+    b = document.getElementById(param.id + '_dragbar');
     //Dragbar-Canvas versetzen
     b.style.top = widgDragBarTop + 'px';
     b.style.left = widgDragBarLeft - b.offsetWidth + 'px';
     //gespeicherte XYZ-Werte setzen
-    var w = document.getElementById(param.id);
-    w.style.left = localStorage[param.id + '_X'] + 'px';
-    w.style.top = localStorage[param.id + '_Y'] + 'px';
-    w.style.zIndex = localStorage[param.id + '_Z'];
+    param.transX = isNaN(localStorage[param.id + '_transX']) ? 0 : parseInt(localStorage[param.id + '_transX'], 10);
+    param.transY = isNaN(localStorage[param.id + '_transY']) ? 0 : parseInt(localStorage[param.id + '_transY'], 10);
+    document.getElementById(param.id).style.zIndex = localStorage[param.id + '_Z'];
     return new VISU.Layer(param);
-}
+};
 
 
 /*
@@ -1065,18 +1136,21 @@ VISU.erzeugeBildObjekt = function(datei) {
     var bild = new Image();
     bild.src = VISU.DIR_BILDER + datei;
     return bild;	
-}
+};
 
 
 /*
  *  Funktion zum Zeichnen vesch. Formen (f. Canvas)
  */
 VISU.zeichneForm = function(id,p) {
-    var elem = document.getElementById(id);
-    var ctx = elem.getContext('2d');
-    var fill = false;
-    
-    var drawBox = function(x, y, width, height) {
+    var elem = document.getElementById(id),
+    ctx = elem.getContext('2d'),
+    fill = false,
+    drawBox, drawLabel, drawDragBar, rg, radgrad, elem, lg, lingrad,
+    einzug, dragBarWidth, verklein, korr, einzugX, einzugY,
+    vertOffs, labelOffsX, labelOffsY;
+            
+    drawBox = function(x, y, width, height) {
         /*ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
         ctx.shadowBlur = 5;
@@ -1094,9 +1168,9 @@ VISU.zeichneForm = function(id,p) {
         ctx.quadraticCurveTo(x, y, x, y + p.radius);
         ctx.stroke();
         if (fill) ctx.fill();
-    }
+    };
     
-    var drawLabel = function(text, offsX, offsY, align) {
+    drawLabel = function(text, offsX, offsY, align) {
         ctx.save();
         /*ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
@@ -1109,9 +1183,9 @@ VISU.zeichneForm = function(id,p) {
         ctx.textAlign = align;
         ctx.fillText(text, offsX, offsY);
         ctx.restore();           
-    }
+    };
     
-    var drawDragBar = function(){
+    drawDragBar = function(){
         ctx.beginPath();
         ctx.moveTo(0, 5);
         ctx.lineTo(0, p.height - p.radius);
@@ -1121,12 +1195,12 @@ VISU.zeichneForm = function(id,p) {
         ctx.lineTo(p.width, 5);
         ctx.stroke();
         ctx.fill();
-    }
+    };
     
     if (p.radialGradient) {
-        var rg = p.radialGradient;
-        var radgrad = ctx.createRadialGradient(rg.x1, rg.y1, rg.r1, rg.x2, rg.y2, rg.r2);
-        for (var elem in p.colorStops) {
+        rg = p.radialGradient;
+        radgrad = ctx.createRadialGradient(rg.x1, rg.y1, rg.r1, rg.x2, rg.y2, rg.r2);
+        for (elem in p.colorStops) {
             radgrad.addColorStop(p.colorStops[elem].r, p.colorStops[elem].s)
         }
         ctx.fillStyle = radgrad;
@@ -1134,9 +1208,9 @@ VISU.zeichneForm = function(id,p) {
     }
     else 
         if (p.linearGradient) {
-            var lg = p.linearGradient;
-            var lingrad = ctx.createLinearGradient(lg.x1, lg.y1, lg.x2, lg.y2);
-            for (var elem in p.colorStops) {
+            lg = p.linearGradient;
+            lingrad = ctx.createLinearGradient(lg.x1, lg.y1, lg.x2, lg.y2);
+            for (elem in p.colorStops) {
                 lingrad.addColorStop(p.colorStops[elem].x, p.colorStops[elem].s)
             }
             ctx.fillStyle = lingrad;
@@ -1153,10 +1227,10 @@ VISU.zeichneForm = function(id,p) {
             
     switch (p.shape) {
         case 'mainLayerBg':
-            var einzug = 100;
-            var dragBarWidth = 40;
-            var verklein = 10;
-            var korr = 0;
+            einzug = 100;
+            dragBarWidth = 40;
+            verklein = 10;
+            korr = 0;
             
             ctx.save();
             
@@ -1206,8 +1280,8 @@ VISU.zeichneForm = function(id,p) {
             
             break;
         case 'subLayerBg':
-            var einzugX = 40;
-            var einzugY = 300;
+            einzugX = 40;
+            einzugY = 300;
             
             ctx.save();
             /*ctx.shadowOffsetX = 2;
@@ -1254,9 +1328,9 @@ VISU.zeichneForm = function(id,p) {
             ctx.restore(); 
             
             if (p.label) {
-                var vertOffs = 0;
-                var labelOffsX = 12;
-                var labelOffsY = 22;
+                vertOffs = 0;
+                labelOffsX = 12;
+                labelOffsY = 22;
                 ctx.save();
                 ctx.translate(p.x, p.y);
                 if (p.labelOrient == 'vert') {
@@ -1341,20 +1415,21 @@ VISU.zeichneForm = function(id,p) {
             drawBox(p.x, p.y, p.width, p.height);
     }
         
-}
+};
 
 
 /*
  * Konstruktor und Fabrikmethode für scrollbare Schaltuhr-Anzeige
  */
 VISU.AnzeigeScroller = function(param) {
-    var self = this;
+    var self = this,
+    i;
     this.param = param;
     this.element = document.getElementById(param.id);
     this.ctx = this.element.getContext('2d');
     
     this.data = new Array(28);
-    for (var i = 0, i2 = 1; i < 28; i++, i2++) {
+    for (i = 0, i2 = 1; i < 28; i++, i2++) {
         this.data[i] = {
             tag: 0,
             kw: 0,
@@ -1394,9 +1469,10 @@ VISU.AnzeigeScroller = function(param) {
     
     this.draw = function() {
         
-        var colorAct = 'rgba(114, 197, 80, 0.8)';     //Farbe Schaltpunkt aktiv
-        var colorInact = 'rgba(255,255,255,0.5)';   //Farbe Schaltpunkt inaktiv
-        var colorWeckerAus = 'rgba(197,114,80,0.8)';   //Farbe Wecken aktiv, aber Wecker aus
+        var colorAct = 'rgba(114, 197, 80, 0.8)',     //Farbe Schaltpunkt aktiv
+        colorInact = 'rgba(255,255,255,0.5)',   //Farbe Schaltpunkt inaktiv
+        colorWeckerAus = 'rgba(197,114,80,0.8)',   //Farbe Wecken aktiv, aber Wecker aus
+        i;
         
         //Zeichnen
         self.ctx.clearRect(0, 0, self.element.offsetWidth, self.element.offsetHeight);
@@ -1404,7 +1480,7 @@ VISU.AnzeigeScroller = function(param) {
         
         self.ctx.translate(0, self.aktTransPosY);
         
-        for (var i = 0; i <= self.angezeigteFrames; i++) {
+        for (i = 0; i <= self.angezeigteFrames; i++) {
         
             var offs = i * self.frameFullHeight;
             
@@ -1474,7 +1550,7 @@ VISU.AnzeigeScroller = function(param) {
             self.ctx.restore(); 
         }
         self.ctx.restore();
-    }
+    };
     
     this.scroll = function(aktMausY) {
     
@@ -1508,7 +1584,7 @@ VISU.AnzeigeScroller = function(param) {
         //Zeichnen
         this.draw();
         this.lastMausY = aktMausY;          
-    }
+    };
     
     this.fadeScroll = function() {
         
@@ -1527,9 +1603,10 @@ VISU.AnzeigeScroller = function(param) {
             else {
                 document.addEventListener("mousemove", self.selectFrame, false);
             }
-    }
+    };
     
     this.selectFrame = function(e) {
+        var i;
         
         if (self.element.parentNode.style.visibility != 'visible') return;
         
@@ -1541,7 +1618,7 @@ VISU.AnzeigeScroller = function(param) {
             return;
         }
 
-        for (var i = 0 ; i <= self.angezeigteFrames; i++) {
+        for (i = 0 ; i <= self.angezeigteFrames; i++) {
            if (e.pageY - self.element.offsetTop - self.element.offsetParent.offsetTop < self.aktTransPosY + (1 + i) * self.frameFullHeight) {
                self.selectedFrame = self.frameCounter + i;
                break;
@@ -1570,13 +1647,19 @@ VISU.AnzeigeScroller = function(param) {
        
        self.dropZone = self.selectedFrame + 1;
 
-    }
+    };
     
     //Events
     function mPosSel(e) {
         e.preventDefault();
         e.stopPropagation();
         self.scroll(e.pageY);
+    }
+    
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
     }
     
     this.element.onmousedown = function(e) {
@@ -1595,7 +1678,7 @@ VISU.AnzeigeScroller = function(param) {
         self.fadeScrollVal = 0;
         self.lastMausY = e.pageY;
         self.element.addEventListener("mousemove",mPosSel, false);
-    }
+    };
     
     this.element.onmouseup = function(e) {
         e.preventDefault();
@@ -1618,24 +1701,24 @@ VISU.AnzeigeScroller = function(param) {
                 }
             }
         }
-    }
+    };
     
     this.element.onmouseout = function(e) {
         e.preventDefault();
         e.stopPropagation();
         self.element.removeEventListener("mousemove",mPosSel, false);
         self.draw();
-    }
+    };
     
     document.addEventListener("mousemove", self.selectFrame, false);
     
     //Erster Aufruf
     this.scroll(0);   
-}
+};
 
 VISU.AnzeigeScroller.erzeuge = function(param) {
     return new VISU.AnzeigeScroller(param);
-}
+};
 
 
 /*
@@ -1660,14 +1743,20 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
         this.overTarget = mausX > this.dropTarget.element.offsetLeft && mausX < this.dropTarget.element.offsetLeft + this.dropTarget.element.offsetWidth &&
         mausY > this.dropTarget.element.offsetTop && mausY < this.dropTarget.element.offsetTop + this.dropTarget.element.offsetHeight;
         */
-    }
+    };
     
     this.webkitmove = function(mausX, mausY) {
         this.dragElement.style.webkitTransform = 'translate(' + (this.startElementX + mausX - this.startMausX) + 'px,' + (this.startElementY + mausY - this.startMausY) + 'px)';
-    }
+    };
     
-    var mouseMove = function(e) {e.preventDefault(); self.move(e.pageX, e.pageY);}
-    var webkitMove = function(e) {e.preventDefault(); self.webkitmove(e.pageX, e.pageY);}
+    var mouseMove = function(e) {e.preventDefault(); self.move(e.pageX, e.pageY);};
+    var webkitMove = function(e) {e.preventDefault(); self.webkitmove(e.pageX, e.pageY);};
+    
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
+    }
     
     this.element.onmousedown = function(e) {
         e.preventDefault();
@@ -1699,7 +1788,7 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
             }
             else removeDragElement();
         }
-    }
+    };
     
     this.element.ontouchstart = function(e) {
         e.preventDefault();
@@ -1731,13 +1820,13 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
             }
             else removeDragElement();
         }
-    }
+    };
     
-}
+};
 
 VISU.DataElement.erzeugePreset = function(id, preset) {
     return new VISU.DataElement(id, preset, VISU.anzeig.pers.zeitLeiste, VISU.comm.sendPreset);
-}
+};
 
 
 /*
@@ -1768,28 +1857,35 @@ VISU.AnzeigeUhr = function(id, typ) {
         var uhrzeit = vorstd + stunden + vormin + minuten + vorsek + sekunden; 
         self.element.innerHTML = ((typ == 'datum') ? datum : uhrzeit);
     }
-}
+};
 
 VISU.AnzeigeUhr.erzeugeDigiUhr = function(id) {
     return new VISU.AnzeigeUhr(id, 'uhr')
-}
+};
 
 VISU.AnzeigeUhr.erzeugeDatum = function(id) {
     return new  VISU.AnzeigeUhr(id, 'datum')
-}
+};
 
 
 /*
  * Meldebox
  */
 VISU.AnzeigeMeldeBox = function(param) {
-    var self = this;
+    var self = this,
+    i;
     this.element = document.getElementById(param.id);
     this.ctx = this.element.getContext('2d');
     this.data = new Array(100);
-    this.element.onmousedown = param.mousedown;    
+    this.element.onmousedown = param.mousedown;
     
-    for (var i = 0; i < 100; i++) {
+    if (VISU.isMobileDevice) {
+        
+    } else {
+        
+    }
+    
+    for (i = 0; i < 100; i++) {
         this.data[i] = {
             gekommen: "",
             gegangen: "",
@@ -1799,7 +1895,7 @@ VISU.AnzeigeMeldeBox = function(param) {
     
     this.aktualisiere = function() {
         
-        var draw, sp5txt, sp6txt, xoffs = 57, cnt = 1;
+        var draw, sp5txt, sp6txt, xoffs = 57, cnt = 1, k, i, id;
         
         self.ctx.clearRect(0,0,self.element.width,self.element.height);
         
@@ -1823,9 +1919,9 @@ VISU.AnzeigeMeldeBox = function(param) {
         self.ctx.fillText('Status', param.spalte6, 40); 
         
         //Meldungen nach Klassen sortiert ausgeben
-        for (var k = 0; k < 3; k++) {
+        for (k = 0; k < 3; k++) {
         
-            for (var i = 0, id = 1; i < 100; i++, id++) {
+            for (i = 0, id = 1; i < 100; i++, id++) {
                 if (self.data[i].status != 0 && param.txt[id] != undefined) {
                 
                     self.ctx.save();
@@ -1884,23 +1980,23 @@ VISU.AnzeigeMeldeBox = function(param) {
             }
         }
     }
-}
+};
 
 VISU.AnzeigeMeldeBox.erzeugeBox = function(param) {
     return new VISU.AnzeigeMeldeBox(param);
-} 
+};
 
 
 /*
  * Logbuch
  */
 VISU.AnzeigeLogbuch = function(param) {
-    var self = this;
+    var self = this, i;
     this.element = document.getElementById(param.id);
     this.ctx = this.element.getContext('2d');
     this.data = new Array(50);
     
-    for (var i = 0; i < 50; i++) {
+    for (i = 0; i < 50; i++) {
         this.data[i] = {
             zeit: "",
             id: 0,
@@ -1910,7 +2006,7 @@ VISU.AnzeigeLogbuch = function(param) {
     
     this.aktualisiere = function() {
         
-        var sp2txt, xoffs = 30;
+        var sp2txt, xoffs = 30, i;
         
         self.ctx.clearRect(0,0,self.element.width,self.element.height);
         
@@ -1934,7 +2030,7 @@ VISU.AnzeigeLogbuch = function(param) {
         self.ctx.fillText('Typ', param.spalte4, 13);
         self.ctx.fillText('Text', param.spalte5, 13); 
         
-        for (var i = 0; i < 50; i++) {
+        for (i = 0; i < 50; i++) {
             if (self.data[i].status != 0) {
                 
                 //Farben und Sortierung
@@ -1979,18 +2075,18 @@ VISU.AnzeigeLogbuch = function(param) {
             }
         }  
     }
-}
+};
 
 VISU.AnzeigeLogbuch.erzeuge = function(param) {
     return new VISU.AnzeigeLogbuch(param);
-}
+};
 
 
 /*
  * Anzeige Pumpe
  */
 VISU.AnzeigePumpe = function(param) {
-    var self = this;
+    var self = this, i;
     this.element = document.getElementById(param.id);
     this.ctx = this.element.getContext('2d');
     this.intervTime = Math.floor(1000/param.rate);
@@ -2047,7 +2143,7 @@ VISU.AnzeigePumpe = function(param) {
         self.ctx.strokeStyle = 'rgba(255,255,255,0.9)';
         self.ctx.lineWidth = 1;
         
-        for (var i = 1; i <= param.segm; i++) {
+        for (i = 1; i <= param.segm; i++) {
             self.ctx.beginPath();
             self.ctx.arc(0,0,innerRad + 2,self.endAngle,self.startAngle,true);
             self.ctx.arc(0,0,param.radius - 2,self.startAngle - korr,self.endAngle + korr,false);
@@ -2060,13 +2156,13 @@ VISU.AnzeigePumpe = function(param) {
         
         self.ctx.restore();
         
-    }
+    };
     //Rotation
     this.rotate = function() {
         if (self.rotAngle > 360) self.rotAngle -= 360; 
         self.rotAngle += param.speed;
         self.draw();
-    }
+    };
     
     //Animation starten/stoppen in Abh. von self.data
     this.aktualisiere = function() {
@@ -2076,24 +2172,24 @@ VISU.AnzeigePumpe = function(param) {
         else if (self.data === true && self.laeuft === false) {
             self.start();
         }
-    }
+    };
     
     //Animation start
     this.start = function() {
         if (self.laeuft === false) this.interval =  window.setInterval(self.rotate, self.intervTime);
         self.laeuft = true;
-    }
+    };
     //Animation stop
     this.stop = function() {
         window.clearInterval(self.interval);
         self.laeuft = false;
-    }
+    };
     this.draw();
-}
+};
 
 VISU.AnzeigePumpe.erzeuge = function(param) {
     return new VISU.AnzeigePumpe(param);
-}
+};
 
 
 /*
@@ -2162,13 +2258,13 @@ VISU.AnzeigeMischer = function(param) {
         
         
         self.ctx.restore();
-    }
+    };
     this.aktualisiere();
-}
+};
 
 VISU.AnzeigeMischer.erzeuge = function(param) {
     return new VISU.AnzeigeMischer(param);
-}
+};
 
 /*
  * Anzeige Rohre
@@ -2248,14 +2344,14 @@ VISU.AnzeigeRohrNetz = function(param) {
         self.ctx.fillText('Vorlauf >>', 447, 0);
         self.ctx.restore();
 
-    }
+    };
  
     this.draw(); //Zeichnen   
-}
+};
 
 VISU.AnzeigeRohrNetz.erzeuge = function(param) {
     return new VISU.AnzeigeRohrNetz(param);
-}
+};
 
 
 /*
@@ -2275,7 +2371,7 @@ VISU.AnzeigeHeizkreise = function(param) {
     
     this.aktualisiere = function(){
     
-        var sp3txt, sp4txt, xoffs = 30;
+        var sp3txt, sp4txt, xoffs = 30, i;
         
         self.ctx.clearRect(0, 0, self.element.width, self.element.height);
         
@@ -2299,7 +2395,7 @@ VISU.AnzeigeHeizkreise = function(param) {
         self.ctx.fillText('Typ', param.spalte3, 13);
         self.ctx.fillText('Ventil', param.spalte4, 13);
 
-        for (var i = 0; i < 13; i++) {
+        for (i = 0; i < 13; i++) {
             
             switch (self.typ[i]) {
                 case "NC":
@@ -2339,14 +2435,14 @@ VISU.AnzeigeHeizkreise = function(param) {
 
             xoffs += 15;
         }  
-    }
+    };
     
     this.aktualisiere();
-}
+};
 
 VISU.AnzeigeHeizkreise.erzeuge = function(param) {
     return new VISU.AnzeigeHeizkreise(param);
-}
+};
 
 
 //Funktion für feste Stellenanzahl, z.B. 001 statt 1
@@ -2357,7 +2453,7 @@ VISU.fixVkStellen = function(zahl, stellen) {
         str = '0' + str;
     } 
     return str;
-}
+};
 
 
 //-------------------------------------------------------------------------

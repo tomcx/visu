@@ -189,6 +189,8 @@ div#magnleiste {
     height: 5px;
     background: url(../img/magnleiste.png);
     background-repeat: repeat-x;
+    -webkit-transition: linear;
+    -webkit-transform:translateZ(0);
 }
 
 div#magnleiste_schatten {
