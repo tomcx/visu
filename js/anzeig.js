@@ -206,8 +206,7 @@ VISU.init.anzeig = function() {
                 farbeAlarm: 'rgba(255, 50, 50, 0.5)',
                 mousedown: function() {
                     VISU.comm.cx.writeBool({
-                        fld: 'M',
-                        addr: 12050,
+                        addr: '%MB12050',
                         val: true,
                         ocd: 500,
                         oc: function() {
