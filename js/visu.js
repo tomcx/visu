@@ -650,22 +650,18 @@ VISU.Button = function(id, funkt, wert0, wert1, bild0, bild1) {
     this.funkt = funkt;
 
     //Handler
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        this.element.onmousedown = function(e) {
-            e.preventDefault();
-            self.down();
-        };
-        this.element.onmouseup = function(e) {
-            e.preventDefault();
-            self.up();
-        };
-    	this.element.onmouseout = function(e) {
-            e.preventDefault();
-            self.out();
-        };
-    }
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
+        e.preventDefault();
+        self.down();
+    };
+    this.element.onmouseup = this.element.ontouchend = function(e) {
+        e.preventDefault();
+        self.up();
+    };
+    this.element.onmouseout = this.element.ontouchleave = function(e) {
+        e.preventDefault();
+        self.out();
+    };
     
 };
 
@@ -725,25 +721,17 @@ VISU.ButtonAnzeige = function(id, funkt, wert0, wert1, bild0, bild0clicked, bild
     this.funkt = funkt;
     this.anzeige = false;
     this.clicked = false;
-
-
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
-    
     
     //Handler
-    this.element.onmousedown = function(e) {
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
         e.preventDefault();
         self.down();
     };
-    this.element.onmouseup = function(e) {
+    this.element.onmouseup = this.element.ontouchend = function(e) {
         e.preventDefault();
         self.up();
     };
-	this.element.onmouseout = function(e) {
+	this.element.onmouseout = this.element.ontouchleave = function(e) {
         e.preventDefault();
         self.out();
     };
@@ -811,16 +799,10 @@ VISU.ButtonToggle = function(id, typ, funkt, wert0, wert1, bild0, bildclick, bil
         e.preventDefault();
         self.aktualisiere();
     };
-    
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
-    
+
     //Handler
-    this.element.onmousedown = this.toggle;
-    this.element.onmouseup = this.release;
+    this.element.onmousedown= this.element.ontouchstart = this.toggle;
+    this.element.onmouseup= this.element.ontouchend = this.release;
 };
 
 VISU.ButtonToggle.prototype.setzeEin = function() {
@@ -875,15 +857,15 @@ VISU.PicButton = function(id, funkt, wert0, wert1, bild) {
     }
 
     //Handler
-    this.element.onmousedown = function(e) {
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
         e.preventDefault();
         self.down();
     };
-    this.element.onmouseup = function(e) {
+    this.element.onmouseup = this.element.ontouchend =function(e) {
         e.preventDefault();
         self.up();
     };
-	this.element.onmouseout = function(e) {
+	this.element.onmouseout= this.element.ontouchleave = function(e) {
         e.preventDefault();
         self.out();
     };
@@ -914,7 +896,37 @@ VISU.PicButton.erzeuge = function(id, funkt, wert0, wert1, bild) {
 // Konstruktor
 VISU.Layer = function(param){
     var self = this,
-    l, i, elem, mPosMove;
+        elem;
+    
+    //Canvas
+    if (param.canvas) {
+        //Hintergründe zeichnen
+        for (elem in param.canvas) {
+            //Dragbar bei Widgets;
+            if (elem == 'bar') {
+                if (param.mainLabel) {
+                    param.canvas[elem].mainLabel = param.mainLabel;
+                }
+                VISU.zeichneForm(param.id + '_dragbar',  param.canvas[elem]);  
+            }
+            else {
+                //Label von Main- und Sublayern übergeben
+                if (param.mainLabel) {
+                    param.canvas[elem].mainLabel = param.mainLabel;
+                }
+                VISU.zeichneForm(param.id + '_canvas', param.canvas[elem]);
+            }
+        }
+    }
+    
+    //Koordinaten speichern
+    function saveKoord() {
+        localStorage[param.id + '_transX'] = self.param.transX;
+        localStorage[param.id + '_transY'] = self.param.transY;
+        for (i in VISU.layer) {
+            localStorage[VISU.layer[i].param.id + '_Z'] = document.getElementById(VISU.layer[i].param.id).style.zIndex;
+        }
+    }
     
     this.param = param;
     this.eingeblendet = false;
@@ -948,77 +960,36 @@ VISU.Layer = function(param){
     };
     
     this.setzeZIndex = function(index) {
-        if (self.element.style.zIndex != index && self.dragBar !== null) {
-            for (l in VISU.layer) {
-                i = parseInt(VISU.layer[l].element.style.zIndex);
-                
-                if (VISU.layer[l].element.style.zIndex == '0') {
-                    return;
-                }
-                else {
-                    var z = (i - 1).toString();
+        var l, z, i;       
+        if (self.element.style.zIndex !== index && self.dragBar !== null) {
+            for (l in VISU.layer) {              
+                self.element.style.zIndex = index;
+                if (VISU.layer[l].element.style.zIndex !== '0') {
+                    i = parseInt(VISU.layer[l].element.style.zIndex, 10);
+                    z = (i - 1).toString();
                     if (!isNaN(z)) {
                         VISU.layer[l].element.style.zIndex = (i - 1).toString();
                     }
-                }
-                self.element.style.zIndex = index;
+                }  
             }
         }
     };
     
-    //Canvas
-    if (param.canvas) {
-        //Hintergründe zeichnen
-        for (elem in param.canvas) {
-            //Dragbar bei Widgets;
-            if (elem == 'bar') {
-                if (param.mainLabel) {
-                    param.canvas[elem].mainLabel = param.mainLabel;
-                }
-                VISU.zeichneForm(param.id + '_dragbar',  param.canvas[elem]);  
-            }
-            else {
-                //Label von Main- und Sublayern übergeben
-                if (param.mainLabel) {
-                    param.canvas[elem].mainLabel = param.mainLabel;
-                }
-                VISU.zeichneForm(param.id + '_canvas', param.canvas[elem]);
-            }
-        }
-    }
-    
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
-    
-    this.element.onmousedown = function(e) {
-            e.preventDefault();
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
             self.setzeZIndex('200');
     };
     
-    this.element.onmouseup = function(e) {
-            e.preventDefault();
+    this.element.onmouseup = this.element.ontouchend = function(e) {
             setTimeout(saveKoord, 2000);
-    };
-    
-    //Koordinaten speichern
-    var saveKoord = function() {
-            localStorage[param.id + '_transX'] = self.param.transX;
-            localStorage[param.id + '_transY'] = self.param.transY;
-            for (i in VISU.layer) {
-                localStorage[VISU.layer[i].param.id + '_Z'] = document.getElementById(VISU.layer[i].param.id).style.zIndex;
-            }
     };
     
     //Make Layer draggable
     if (this.dragBar !== null) {
-        
-        this.move = function(mausX, mausY) {
+
+        this.move = function(sollPos, startPos) {
             
-            this.versatzX = mausX - this.startMausX + this.param.transX;
-            this.versatzY = mausY - this.startMausY + this.param.transY;
+            this.versatzX = sollPos.X - startPos.X + this.param.transX;
+            this.versatzY = sollPos.Y - startPos.Y + this.param.transY;
             
             if (param.magnetic && this.versatzY <= this.minY) {
                 this.versatzY = this.minY;
@@ -1027,46 +998,18 @@ VISU.Layer = function(param){
             this.element.style.MozTransform = 'translate(' + this.versatzX + 'px,' + this.versatzY + 'px)';
             this.element.style.webkitTransform = 'translate(' + this.versatzX + 'px,' + this.versatzY + 'px)';
         };
-        
-        
-        
-        if (VISU.isMobileDevice) {
-            //Mobile Browser
-            mPosMove = function(e) {
+
+		this.dragBar.onmousedown = this.dragBar.ontouchstart = function(e) {
+            
+            function mausBewegung(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                // If there's exactly one finger inside this element
-                if (e.targetTouches.length == 1) {
-                    var touch = e.targetTouches[0];
-                    self.move(touch.pageX, touch.pageY);   
-                } 
-            };
-            
-            document.addEventListener('touchmove', mPosMove, false);
-            
-        } else {
-            //Desktop Browser
-            mPosMove = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                self.move(e.pageX, e.pageY);   
-            };
-            
-            this.dragBar.onmousedown = function(e) {
-                e.preventDefault();
-                //Dragging
-                document.addEventListener("mousemove", mPosMove, true);
-                self.startMausX = e.pageX;
-                self.startMausY = e.pageY;
-                self.minY = -(self.element.offsetTop + self.dragBar.offsetTop + 3);
-                self.element.style.MozTransition = "-moz-transform linear";
-                self.element.style.webkitTransition = "-webkit-transform linear";
-            };
-            
-            this.dragBar.onmouseup = function(e){
-                e.preventDefault();
-                document.removeEventListener("mousemove", mPosMove, true);
                 
+                var aktPos = holeKoord(e);
+                self.move(aktPos, self.startMausPos);
+            }
+            
+            function magnet() {
                 //Widgets an oberen Rand ziehen und Position retten
                 self.param.transX = isNaN(self.versatzX) ? 0 : self.versatzX;
     
@@ -1081,20 +1024,38 @@ VISU.Layer = function(param){
                 } else {
                     self.param.transY = isNaN(self.versatzY) ? 0 : self.versatzY;
                 }
-    
+            }
+            
+            function initMove() {
+                self.minY = -(self.element.offsetTop + self.dragBar.offsetTop + 3);
+                self.element.style.MozTransition = "-moz-transform linear";
+                self.element.style.webkitTransition = "-webkit-transform linear";
             };
-        }
-        
+            
+            function holeKoord(e) {
+                var pos = {};
+                if (e.changedTouches) {
+                    //iPhone
+                    pos.X = e.changedTouches[0].clientX;
+                    pos.Y = e.changedTouches[0].clientY;
+                } else {
+                    pos.X = e.clientX;
+                    pos.Y = e.clientY;
+                }
+                return pos;
+            }
+            
+            initMove();
+            
+            self.startMausPos = holeKoord(e);
+            self.dragBar.ontouchmove = document.onmousemove = mausBewegung;
+            self.dragBar.ontouchend = document.onmouseup = function(e) {
+                e.preventDefault();
+                self.dragBar.ontouchmove = self.dragBar.ontouchend = document.onmousemove = document.onmouseup = null;
+                magnet();
+            }
+        };
 
-        
-        /*
-        this.element.onmouseout = function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            document.removeEventListener("mousemove", mPosMove, true);
-        }
-        */
-       
        //Layer beim Initialisieren auf gespeicherte Position setzen
        (function() {
            self.element.style.MozTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
