@@ -1,5 +1,9 @@
 /**
  * @author T.Schmidt, 06.02.2009
+ * 
+ * 21.09.2012 Auf CSS-Transformationen umgestellt und Touchevents hinzugefügt.
+ * 
+ * 
  *
  * Namespace erzeugen, alle Objekte werden global unter "VISU" platziert
  * 
@@ -153,33 +157,28 @@ VISU.erzeugeTextAnzeige = function(id) {
  */
 // Konstruktor
 VISU.AnzeigeRollo = function(id, anw) {
-    var self = this;
+    var self = this,
+        tmp = 'VISU.button.rolloAnw.' + anw;
+    
     this.pos = 0;
     this.auto = 0;
     this.modus = 0;
-    this.xmas = false;
-    var tmp = 'VISU.button.rolloAnw.' + anw;
+    this.xmas = false;   
     this.anwahl = tmp.split(".");
     
-    
 	this.element = document.getElementById(id);
+	var _spanElem = this.element.getElementsByTagName('span');
 	this.balkenAnzeige = this.element.getElementsByTagName('div')[1];
     this.fahrAnzeige = this.element.getElementsByTagName('img')[0];
     
-    var _spanElem = this.element.getElementsByTagName('span');
 	this.prozAnzeige = _spanElem[0];
 	this.betrArtAnzeige = _spanElem[2];
 	this.modusAnzeige = _spanElem[3];
     this.xmasAnzeige = _spanElem[4];
     
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        this.element.onmousedown = function() {
-            self.anwaehlen();
-        }
+    this.element.onmousedown = this.element.ontouchstart = function() {
+        self.anwaehlen();
     }
-    
     
 };
 
@@ -404,16 +403,11 @@ VISU.AnzeigeChart = function(param){
     this._lineWidthGitter = 0.3;
     this._lineWidthGraph = 0.6;
     
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
-    
-    this.element.onmousedown = function(e) {
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
         e.preventDefault();
         if (self.param.zoom > 0) self.zoom();
     };
+    
     this.aktualisiere(); //bei Objekterstell. 1 mal zeichnen
 };
 
@@ -850,12 +844,6 @@ VISU.PicButton = function(id, funkt, wert0, wert1, bild) {
     this.wert1 = wert1;
     this.funkt = funkt;
 
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
-
     //Handler
     this.element.onmousedown = this.element.ontouchstart = function(e) {
         e.preventDefault();
@@ -921,8 +909,9 @@ VISU.Layer = function(param){
     
     //Koordinaten speichern
     function saveKoord() {
-        localStorage[param.id + '_transX'] = self.param.transX;
-        localStorage[param.id + '_transY'] = self.param.transY;
+        localStorage[param.id + '_X'] = self.element.offsetLeft;
+        localStorage[param.id + '_Y'] = self.element.offsetTop;
+        
         for (i in VISU.layer) {
             localStorage[VISU.layer[i].param.id + '_Z'] = document.getElementById(VISU.layer[i].param.id).style.zIndex;
         }
@@ -941,24 +930,35 @@ VISU.Layer = function(param){
             self.param.setzeSperrFlag();
             self.sperrInterval = window.setInterval(self.param.setzeSperrFlag, 10000); //Refresh-Zeit, Reset-Zeit in SPS 3s
         }
-        self.element.style.visibility = 'visible';            
+        self.element.style.visibility = 'visible';   
         self.setzeZIndex('200');
-        fade(self.element, 0, 1, 20, 0, styleLinear);
+        self.element.style.MozTransition = "opacity 500ms ease-out";
+        self.element.style.webkitTransition = "opacity 500ms ease-out";
+        self.element.style.opacity = 1;
     };
-    
+
     this.blendeAus = function() {
-        fade(self.element, 1, 0, 20, 0, styleLinear, false, null, 
-            function(){
-                self.element.style.visibility = 'hidden';
-                if (self.sperrInterval) window.clearInterval(self.sperrInterval);
-                if (typeof self.param.setzeSperrFlag == 'function') {
-                    self.param.entfSperrFlag();
-                }
-                self.eingeblendet = false;
+        
+        function fade() {
+            self.element.style.visibility = 'hidden';
+            if (self.sperrInterval) window.clearInterval(self.sperrInterval);
+            if (typeof self.param.setzeSperrFlag == 'function') {
+                self.param.entfSperrFlag();
             }
-        )   
+            self.eingeblendet = false;
+            self.element.removeEventListener('transitionend', fade, false);
+            self.element.removeEventListener('webkitTransitionEnd', fade, false);
+        }
+            
+        self.element.style.MozTransition = "opacity 500ms ease-out";
+        self.element.style.webkitTransition = "opacity 500ms ease-out";
+        self.element.style.opacity = 0;
+        
+        self.element.addEventListener('transitionend', fade, false);
+        self.element.addEventListener('webkitTransitionEnd', fade, false);
+        
     };
-    
+
     this.setzeZIndex = function(index) {
         var l, z, i;       
         if (self.element.style.zIndex !== index && self.dragBar !== null) {
@@ -988,8 +988,10 @@ VISU.Layer = function(param){
 
         this.move = function(sollPos, startPos) {
             
-            this.versatzX = sollPos.X - startPos.X + this.param.transX;
-            this.versatzY = sollPos.Y - startPos.Y + this.param.transY;
+            //this.versatzX = sollPos.X - startPos.X + this.param.transX;
+            //this.versatzY = sollPos.Y - startPos.Y + this.param.transY;
+            this.versatzX = sollPos.X - startPos.X;
+            this.versatzY = sollPos.Y - startPos.Y;
             
             if (param.magnetic && this.versatzY <= this.minY) {
                 this.versatzY = this.minY;
@@ -1010,19 +1012,34 @@ VISU.Layer = function(param){
             }
             
             function magnet() {
-                //Widgets an oberen Rand ziehen und Position retten
-                self.param.transX = isNaN(self.versatzX) ? 0 : self.versatzX;
-    
+                
+                function resetTrans() {
+                    self.element.removeEventListener('transitionend', resetTrans, false);
+                    self.element.removeEventListener('webkitTransitionEnd', resetTrans, false);
+                    self.element.style.top = (self.element.offsetTop + self.versatzY) + 'px';
+                    self.element.style.left = (self.element.offsetLeft + self.versatzX) + 'px';
+                    self.element.style.MozTransition = null;
+                    self.element.style.webkitTransition = null;
+                    self.element.style.webkitTransform = null;
+                    self.element.style.MozTransform = null;
+                    self.versatzX = 0;
+                    self.versatzY = 0;
+                } 
+                
+                //Widgets an oberen Rand ziehen
                 if (param.magnetic && self.element.offsetTop + self.versatzY < 0) {
+
                     self.element.style.MozTransition = "-moz-transform 500ms ease-out";
+                    self.element.addEventListener('transitionend', resetTrans, false);
                     self.element.style.MozTransform = 'translate(' + self.versatzX + 'px,' + self.minY + 'px)';
-                    
+
                     self.element.style.webkitTransition = "-webkit-transform 500ms ease-out";
+                    self.element.addEventListener('webkitTransitionEnd', resetTrans, false);
                     self.element.style.webkitTransform = 'translate(' + self.versatzX + 'px,' + self.minY + 'px)';
                     
-                    self.param.transY = self.minY;
+                    self.versatzY = self.minY;
                 } else {
-                    self.param.transY = isNaN(self.versatzY) ? 0 : self.versatzY;
+                    resetTrans();
                 }
             }
             
@@ -1035,7 +1052,7 @@ VISU.Layer = function(param){
             function holeKoord(e) {
                 var pos = {};
                 if (e.changedTouches) {
-                    //iPhone
+                    //Touchscreens
                     pos.X = e.changedTouches[0].clientX;
                     pos.Y = e.changedTouches[0].clientY;
                 } else {
@@ -1048,19 +1065,13 @@ VISU.Layer = function(param){
             initMove();
             
             self.startMausPos = holeKoord(e);
-            self.dragBar.ontouchmove = document.onmousemove = mausBewegung;
-            self.dragBar.ontouchend = document.onmouseup = function(e) {
+            document.ontouchmove = document.onmousemove = mausBewegung;
+            document.ontouchend = document.onmouseup = function(e) {
                 e.preventDefault();
-                self.dragBar.ontouchmove = self.dragBar.ontouchend = document.onmousemove = document.onmouseup = null;
+                document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null;
                 magnet();
             }
         };
-
-       //Layer beim Initialisieren auf gespeicherte Position setzen
-       (function() {
-           self.element.style.MozTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
-           self.element.style.webkitTransform = 'translate(' + self.param.transX + 'px,' + self.param.transY + 'px)';
-       })();
     }
 };
 
@@ -1078,9 +1089,11 @@ VISU.Layer.erzeugeMainLayer = function(param) {
         param.canvas[c] = canvas[c];
     }
     //gespeicherte XYZ-Werte setzen
-    param.transX = isNaN(localStorage[param.id + '_transX']) ? 0 : parseInt(localStorage[param.id + '_transX'], 10);
-    param.transY = isNaN(localStorage[param.id + '_transY']) ? 0 : parseInt(localStorage[param.id + '_transY'], 10);
-    document.getElementById(param.id).style.zIndex = localStorage[param.id + '_Z'];
+    //gespeicherte XYZ-Werte setzen
+    var w = document.getElementById(param.id);
+    w.style.left = localStorage[param.id + '_X'] + 'px';
+    w.style.top = localStorage[param.id + '_Y'] + 'px';
+    w.style.zIndex = localStorage[param.id + '_Z'];
     return new VISU.Layer(param);
 };
 
@@ -1111,9 +1124,11 @@ VISU.Layer.erzeugeWidget = function(param) {
     b.style.top = widgDragBarTop + 'px';
     b.style.left = widgDragBarLeft - b.offsetWidth + 'px';
     //gespeicherte XYZ-Werte setzen
-    param.transX = isNaN(localStorage[param.id + '_transX']) ? 0 : parseInt(localStorage[param.id + '_transX'], 10);
-    param.transY = isNaN(localStorage[param.id + '_transY']) ? 0 : parseInt(localStorage[param.id + '_transY'], 10);
-    document.getElementById(param.id).style.zIndex = localStorage[param.id + '_Z'];
+    //gespeicherte XYZ-Werte setzen
+    var w = document.getElementById(param.id);
+    w.style.left = localStorage[param.id + '_X'] + 'px';
+    w.style.top = localStorage[param.id + '_Y'] + 'px';
+    w.style.zIndex = localStorage[param.id + '_Z'];
     return new VISU.Layer(param);
 };
 
@@ -1459,9 +1474,9 @@ VISU.AnzeigeScroller = function(param) {
     this.draw = function() {
         
         var colorAct = 'rgba(114, 197, 80, 0.8)',     //Farbe Schaltpunkt aktiv
-        colorInact = 'rgba(255,255,255,0.5)',   //Farbe Schaltpunkt inaktiv
-        colorWeckerAus = 'rgba(197,114,80,0.8)',   //Farbe Wecken aktiv, aber Wecker aus
-        i;
+            colorInact = 'rgba(255,255,255,0.5)',   //Farbe Schaltpunkt inaktiv
+            colorWeckerAus = 'rgba(197,114,80,0.8)',   //Farbe Wecken aktiv, aber Wecker aus
+            i, offs, count;
         
         //Zeichnen
         self.ctx.clearRect(0, 0, self.element.offsetWidth, self.element.offsetHeight);
@@ -1471,7 +1486,7 @@ VISU.AnzeigeScroller = function(param) {
         
         for (i = 0; i <= self.angezeigteFrames; i++) {
         
-            var offs = i * self.frameFullHeight;
+            offs = i * self.frameFullHeight;
             
             VISU.zeichneForm(self.param.id, {
                 shape: 'groupBg',
@@ -1496,7 +1511,7 @@ VISU.AnzeigeScroller = function(param) {
             self.ctx.shadowColor = 'rgba(255,255,255,1)';
             */
             
-            var count = self.frameCounter + i;
+            count = self.frameCounter + i;
             
             if (count >= 0 && count < self.maxCounter) {
                 //console.log(count);
@@ -1591,24 +1606,27 @@ VISU.AnzeigeScroller = function(param) {
             }
             else {
                 document.addEventListener("mousemove", self.selectFrame, false);
+                document.addEventListener("touchmove", self.selectFrame, false);
             }
     };
     
     this.selectFrame = function(e) {
-        var i;
-        
+ 
         if (self.element.parentNode.style.visibility != 'visible') return;
         
-        //Zeichnen
-        self.draw();
+        var pos = holeKoord(e),
+            i;
         
-        if ( ! (self.element.offsetLeft + self.element.offsetParent.offsetLeft < e.pageX && e.pageX < self.element.offsetLeft + self.element.offsetParent.offsetLeft + self.param.frameBreite + self.param.offsetX)) {
+        if ( ! (self.element.offsetLeft + self.element.offsetParent.offsetLeft < pos.X && pos.X < self.element.offsetLeft + self.element.offsetParent.offsetLeft + self.param.frameBreite + self.param.offsetX)) {
             self.mouseOver = false;
             return;
         }
 
+        //Zeichnen
+        self.draw();
+        
         for (i = 0 ; i <= self.angezeigteFrames; i++) {
-           if (e.pageY - self.element.offsetTop - self.element.offsetParent.offsetTop < self.aktTransPosY + (1 + i) * self.frameFullHeight) {
+           if (pos.Y - self.element.offsetTop - self.element.offsetParent.offsetTop < self.aktTransPosY + (1 + i) * self.frameFullHeight) {
                self.selectedFrame = self.frameCounter + i;
                break;
            }
@@ -1639,67 +1657,81 @@ VISU.AnzeigeScroller = function(param) {
     };
     
     //Events
-    function mPosSel(e) {
+    function mausBewegung(e) {
         e.preventDefault();
         e.stopPropagation();
-        self.scroll(e.pageY);
+        var pos = holeKoord(e);
+        self.scroll(pos.Y);
     }
     
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
+    function holeKoord(e) {
+            var pos = {};
+            if (e.changedTouches) {
+                //Touchscreens
+                pos.X = e.changedTouches[0].clientX;
+                pos.Y = e.changedTouches[0].clientY;
+            } else {
+                pos.X = e.clientX;
+                pos.Y = e.clientY;
+            }
+            return pos;
+        }
     
-    this.element.onmousedown = function(e) {
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
         e.preventDefault();
         e.stopPropagation();
         var time = new Date();
+        var pos = holeKoord(e);
+        
+        self.selectFrame(e);
         
         //Doppelclick
         if (self.selectedFrame == self.clickedFrame && time.getTime() < self.startTime + 250) {
             self.param.execOnDoubleClick(self.selectedFrame + 1);
         }  
         
-        self.startPos = e.pageY;
+        self.startPos = self.lastMausY = pos.Y;
         self.startTime = time.getTime();
         self.clickedFrame = self.selectedFrame;
         self.fadeScrollVal = 0;
-        self.lastMausY = e.pageY;
-        self.element.addEventListener("mousemove",mPosSel, false);
+        self.element.onmousemove = self.element.ontouchmove = mausBewegung;
     };
     
-    this.element.onmouseup = function(e) {
+    this.element.onmouseup = this.element.ontouchend = function(e) {
         e.preventDefault();
         e.stopPropagation();
-        self.element.removeEventListener("mousemove", mPosSel, false);
+        var pos = holeKoord(e);
+        self.element.onmousemove = self.element.ontouchmove = null;
+
         if (self.droppingActive) {
-            self.dropData(e.pageY);
+            self.dropData(pos.Y);
         }
         else {
-            var posDiff = self.startPos - e.pageY;
-            var time = new Date();
-            var endTime = time.getTime();
-            var timeDiff = endTime - self.startTime + 1; // +1 um Division durch Null zu verhindern
+            var posDiff = self.startPos - pos.Y,
+                time = new Date(),
+                endTime = time.getTime(),
+                timeDiff = endTime - self.startTime + 1; // +1 um Division durch Null zu verhindern
             //var speed = posDiff / timeDiff * 40;
             if (timeDiff < 500) {
                 if (posDiff > 10 || posDiff < -10) {
                     self.fadeScrollVal = posDiff / timeDiff * 30;
                     document.removeEventListener("mousemove", self.selectFrame, false);
+                    document.removeEventListener("touchmove", self.selectFrame, false);
                     self.fadeScroll();
                 }
             }
         }
     };
     
-    this.element.onmouseout = function(e) {
+    this.element.onmouseout = this.element.ontouchleave = function(e) {
         e.preventDefault();
         e.stopPropagation();
-        self.element.removeEventListener("mousemove",mPosSel, false);
+        self.element.onmousemove = self.element.ontouchmove = null;
         self.draw();
     };
-    
+
     document.addEventListener("mousemove", self.selectFrame, false);
+    document.addEventListener("touchmove", self.selectFrame, false);
     
     //Erster Aufruf
     this.scroll(0);   
@@ -1721,96 +1753,86 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
     this.dropTarget = dropTarget;
     this.dropFunction = dropFunction;
     
-    
-    this.move = function(mausX, mausY) {
+    this.move = function(sollPos, startPos) {
+            
+        this.versatzX = sollPos.X - startPos.X;
+        this.versatzY = sollPos.Y - startPos.Y;
         
-        this.dragElement.style.top = (this.startElementY + mausY - this.startMausY) + "px"; 
-        this.dragElement.style.left = (this.startElementX + mausX - this.startMausX) + "px";
-        //this.dragElement.style.webkitTransform = 'translate(' + (mausX - this.startMausX) + 'px,' + (mausY - this.startMausY) + 'px)';
-        //this.dragElement.style.MozTransform = 'translate(' + (mausX - this.startMausX) + 'px,' + (mausY - this.startMausY) + 'px)'; 
-        /*
-        this.overTarget = mausX > this.dropTarget.element.offsetLeft && mausX < this.dropTarget.element.offsetLeft + this.dropTarget.element.offsetWidth &&
-        mausY > this.dropTarget.element.offsetTop && mausY < this.dropTarget.element.offsetTop + this.dropTarget.element.offsetHeight;
-        */
+        this.dragElement.style.MozTransform = 'translate(' + this.versatzX + 'px,' + this.versatzY + 'px)';
+        this.dragElement.style.webkitTransform = 'translate(' + this.versatzX + 'px,' + this.versatzY + 'px)';
     };
     
-    this.webkitmove = function(mausX, mausY) {
-        this.dragElement.style.webkitTransform = 'translate(' + (this.startElementX + mausX - this.startMausX) + 'px,' + (this.startElementY + mausY - this.startMausY) + 'px)';
-    };
-    
-    var mouseMove = function(e) {e.preventDefault(); self.move(e.pageX, e.pageY);};
-    var webkitMove = function(e) {e.preventDefault(); self.webkitmove(e.pageX, e.pageY);};
-    
-    if (VISU.isMobileDevice) {
+    this.element.onmousedown = this.element.ontouchstart = function(e) {
         
-    } else {
-        
-    }
-    
-    this.element.onmousedown = function(e) {
-        e.preventDefault();
         e.stopPropagation();
-        self.startElementX = self.element.offsetLeft;
-        self.startElementY = self.element.offsetTop;
-        self.startMausX = e.pageX;
-        self.startMausY = e.pageY;
+        e.preventDefault();
+        
+        function mausBewegung(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var aktPos = holeKoord(e);
+            self.move(aktPos, self.startMausPos);
+        }
+
+        function holeKoord(e) {
+            var pos = {};
+            if (e.changedTouches) {
+                //Touchscreens
+                pos.X = e.changedTouches[0].clientX;
+                pos.Y = e.changedTouches[0].clientY;
+            } else {
+                pos.X = e.clientX;
+                pos.Y = e.clientY;
+            }
+            return pos;
+        }
+
         self.dragElement = self.element.cloneNode(true);
         self.element.parentNode.appendChild(self.dragElement);
         self.dragElement.style.position = 'absolute';
-        self.dragElement.style.top = (self.startElementY) + "px"; 
-        self.dragElement.style.left = (self.startElementX) + "px";
+        self.dragElement.style.top = (self.element.offsetTop) + "px"; 
+        self.dragElement.style.left = (self.element.offsetLeft) + "px";
         self.dragElement.style.opacity = 0.5;
-        document.addEventListener("mousemove", mouseMove, false);
-        self.dragElement.onmouseup = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.removeEventListener("mousemove", mouseMove, false);
+        self.dragElement.style.MozTransition = "-moz-transform linear";
+        self.dragElement.style.webkitTransition = "-webkit-transform linear";
+        self.startMausPos = holeKoord(e);
+        document.ontouchmove = document.onmousemove = mausBewegung;
         
+        document.ontouchend = document.onmouseup = function(e) {
+            
             function removeDragElement() {
-                self.element.parentNode.removeChild(self.dragElement);
+                self.dragElement.removeEventListener('transitionend', removeDragElement, false);
+                self.dragElement.removeEventListener('webkitTransitionEnd', removeDragElement, false);
+                self.dragElement.style.MozTransition = null;
+                self.dragElement.style.webkitTransition = null;
+                self.dragElement.style.webkitTransform = null;
+                self.dragElement.style.MozTransform = null;
+                self.dragElement.parentNode.removeChild(self.dragElement);
             }
             
+            e.stopPropagation();
+            e.preventDefault();
+            document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null;
+
             if (self.dropTarget.mouseOver) {
                 self.dropFunction(self.data, self.dropTarget.dropZone);
                 self.dragElement.innerHTML = "";
-                scale(self.dragElement, 139, 82, 139, 0, 10, 0, styleLinear, false, move(self.dragElement, self.dragElement.offsetTop, self.dragElement.offsetLeft, self.dragElement.offsetTop + 80, self.dragElement.offsetLeft, 10, 0, styleLinear), removeDragElement);
+                self.dragElement.style.webkitTransform = null;
+                self.dragElement.style.MozTransform = null;
+                self.dragElement.style.top = (self.dragElement.offsetTop + self.versatzY) + "px"; 
+                self.dragElement.style.left = (self.dragElement.offsetLeft + self.versatzX) + "px";
+                self.dragElement.style.MozTransition = "-moz-transform 500ms ease-out";
+                self.dragElement.style.webkitTransition = "-webkit-transform 500ms ease-out";
+                self.dragElement.addEventListener('transitionend', removeDragElement, false);
+                self.dragElement.addEventListener('webkitTransitionEnd', removeDragElement, false);
+                self.dragElement.style.MozTransform = 'scale(0.1)';
+                self.dragElement.style.webkitTransform = 'scale(0.1)';
+            } else { 
+                removeDragElement();
             }
-            else removeDragElement();
-        }
+        };
     };
-    
-    this.element.ontouchstart = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        self.startElementX = self.element.offsetLeft;
-        self.startElementY = self.element.offsetTop;
-        self.startMausX = e.pageX;
-        self.startMausY = e.pageY;
-        self.dragElement = self.element.cloneNode(true);
-        self.element.parentNode.appendChild(self.dragElement);
-        self.dragElement.style.position = 'absolute';
-        self.dragElement.style.top = (self.startElementY) + "px"; 
-        self.dragElement.style.left = (self.startElementX) + "px";
-        self.dragElement.style.opacity = 0.5;
-        document.addEventListener("touchmove", webkitMove, false);
-        self.dragElement.ontouchend = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.removeEventListener("touchmove", webkitMove, false);
-        
-            function removeDragElement() {
-                self.element.parentNode.removeChild(self.dragElement);
-            }
-            
-            if (self.dropTarget.mouseOver) {
-                self.dropFunction(self.data, self.dropTarget.dropZone);
-                self.dragElement.innerHTML = "";
-                scale(self.dragElement, 139, 82, 139, 0, 10, 0, styleLinear, false, move(self.dragElement, self.dragElement.offsetTop, self.dragElement.offsetLeft, self.dragElement.offsetTop + 80, self.dragElement.offsetLeft, 10, 0, styleLinear), removeDragElement);
-            }
-            else removeDragElement();
-        }
-    };
-    
+
 };
 
 VISU.DataElement.erzeugePreset = function(id, preset) {
@@ -1866,13 +1888,7 @@ VISU.AnzeigeMeldeBox = function(param) {
     this.element = document.getElementById(param.id);
     this.ctx = this.element.getContext('2d');
     this.data = new Array(100);
-    this.element.onmousedown = param.mousedown;
-    
-    if (VISU.isMobileDevice) {
-        
-    } else {
-        
-    }
+    this.element.onmousedown = this.element.ontouchstart = param.mousedown;
     
     for (i = 0; i < 100; i++) {
         this.data[i] = {
