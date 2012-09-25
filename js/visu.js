@@ -1796,6 +1796,7 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
         self.dragElement.style.MozTransition = "-moz-transform linear";
         self.dragElement.style.webkitTransition = "-webkit-transform linear";
         self.startMausPos = holeKoord(e);
+        
         document.ontouchmove = document.onmousemove = mausBewegung;
         
         document.ontouchend = document.onmouseup = function(e) {
@@ -1813,7 +1814,7 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
             e.stopPropagation();
             e.preventDefault();
             document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null;
-
+            
             if (self.dropTarget.mouseOver) {
                 self.dropFunction(self.data, self.dropTarget.dropZone);
                 self.dragElement.innerHTML = "";
@@ -1828,11 +1829,15 @@ VISU.DataElement = function(id, data, dropTarget, dropFunction) {
                 self.dragElement.style.MozTransform = 'scale(0.1)';
                 self.dragElement.style.webkitTransform = 'scale(0.1)';
             } else { 
-                removeDragElement();
+                self.dragElement.style.MozTransition = "-moz-transform 300ms ease-out";
+                self.dragElement.style.webkitTransition = "-webkit-transform 300ms ease-out";
+                self.dragElement.addEventListener('transitionend', removeDragElement, false);
+                self.dragElement.addEventListener('webkitTransitionEnd', removeDragElement, false);
+                self.dragElement.style.MozTransform = 'translate(' + self.element.offsetLeft + 'px,' + self.element.offsetTop + 'px)';
+                self.dragElement.style.webkitTransform = 'translate(0px,0px)';
             }
         };
     };
-
 };
 
 VISU.DataElement.erzeugePreset = function(id, preset) {
