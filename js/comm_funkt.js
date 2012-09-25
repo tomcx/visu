@@ -37,7 +37,7 @@ VISU.init.comm_funkt = function() {
         
         VISU.comm.pollEvents();
         
-        //VISU.comm.pollAussenTemp();
+        VISU.comm.pollAussenTemp();
         
         VISU.comm.pollPersonenStatus();
         
