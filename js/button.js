@@ -268,12 +268,12 @@ VISU.init.button = function() {
     VISU.buttontext = {
         //Wohnzimmer
         raum1: {
-            licht1: 'TV',
-            licht2: 'Szene 2',
-            licht3: 'Szene 3',
-            licht4: 'Szene 4',
-            licht5: 'Szene 5',
-            licht6: 'Szene 6',
+            licht1: 'Normal 1',
+            licht2: 'Normal 2',
+            licht3: 'Essen 1',
+            licht4: 'Essen 2',
+            licht5: 'TV 1',
+            licht6: 'TV 2',
             sonder1: 'Verschatt.',
             sonder2: '---',
             sonder3: '---',
