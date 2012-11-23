@@ -68,7 +68,7 @@ VISU.init.meldtxt = function() {
         },
         22: {
             typ: 'Warnung',
-            text: 'Mindestens ein Rollladen gesperrt',
+            text: 'Mindestens ein Rollladen gesperrt'
         },
         23: {
             typ: 'Hinweis',
@@ -126,6 +126,6 @@ VISU.init.meldtxt = function() {
             typ: 'Alarm',
             text: 'WC Lüfter max. Laufzeit (1 Stunde) überschritten'
         }
-    }
+    };
     
 }
