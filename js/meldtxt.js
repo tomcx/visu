@@ -110,21 +110,45 @@ VISU.init.meldtxt = function() {
             typ: 'Hinweis',
             text: 'Wohnzimmer Verschattung aktiviert'
         },
+        42: {
+            typ: 'Warnung',
+            text: 'Warnung: Wohnzimmer Licht Automatik deaktiviert'
+        },
+        51: {
+            typ: 'Warnung',
+            text: 'Warnung: Flur Licht Automatik deaktiviert'
+        },
         61: {
             typ: 'Hinweis',
             text: 'Schlafzimmer Verschattung aktiviert'
+        },
+        62: {
+            typ: 'Warnung',
+            text: 'Warnung: Schlafzimmer Licht Automatik deaktiviert'
         },
         71: {
             typ: 'Hinweis',
             text: 'Kinderzimmer Verschattung aktiviert'
         },
+        72: {
+            typ: 'Warnung',
+            text: 'Warnung: Kinderzimmer Licht Automatik deaktiviert'
+        },
         81: {
             typ: 'Alarm',
             text: 'Bad Lüfter max. Laufzeit (1 Stunde) überschritten'
         },
+        82: {
+            typ: 'Warnung',
+            text: 'Warnung: Bad Licht Automatik deaktiviert'
+        },
         91: {
             typ: 'Alarm',
             text: 'WC Lüfter max. Laufzeit (1 Stunde) überschritten'
+        },
+        92: {
+            typ: 'Warnung',
+            text: 'Warnung: Toilette Licht Automatik deaktiviert'
         }
     };
     
