@@ -12,7 +12,7 @@ VISU.init.comm = function() {
         cx: TAME.WebServiceClient.createClient({
             //serviceUrl: window.location.protocol + "//" + window.location.hostname + '/TcAdsWebService/TcAdsWebService.dll',
             serviceUrl: window.location.href.replace(/visu\/main\.html/,'/TcAdsWebService/TcAdsWebService.dll'),
-            amsNetId: '5.2.52.54.1.1',
+            amsNetId: 'xx.xx.xx.xx.xx.xx',
             //amsNetId: '192.168.1.2.1.1',
             dataAlign4: true,
             onReady: function() {
