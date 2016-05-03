@@ -158,13 +158,13 @@ VISU.init.layer = function() {
             id: 'layer_visinfo'
         })
         
-    }
-}
+    };
+};
 
 VISU.init.layer_2 = function() {
     
     VISU.layer.presetsTag.presets = ['---','---','---','---','---','---','---','---','---','---'];
     VISU.layer.presetsWoche.presets = ['---','---','---','---','---','---','---','---','---','---'];
     
-}
+};
 

@@ -106,7 +106,7 @@ VISU.AnzeigeTextArray = function(id, texte) {
     this.aktualisiere = function() {
         self.data *= 1; //Falls boolsche Werte übergeben wurden
         self.element.data = texte[self.data];
-    }
+    };
 };
 
 VISU.AnzeigeTextArray.erzeuge = function(id, texte) {
@@ -132,7 +132,7 @@ VISU.AnzeigeTextKlasse = function(id, klassen) {
     this.aktualisiere = function() {
         self.data *= 1; //Falls boolsche Werte übergeben wurden
         self.element.className = klassen[self.data];
-    }
+    };
 };
 
 VISU.AnzeigeTextKlasse.erzeuge = function(id, klassen) {
@@ -178,7 +178,7 @@ VISU.AnzeigeRollo = function(id, anw) {
     
     this.element.onmousedown = this.element.ontouchstart = function() {
         self.anwaehlen();
-    }
+    };
     
 };
 
@@ -253,7 +253,7 @@ VISU.AnzeigeBalken = function(param) {
     var korr = 0.5;                    //Korrektur wg. Linienstärke kleiner 1
     var offsetX = 7;                   //Sklalenoffset X
     var offsetY = 20;                  //Sklalenoffset Y
-    var textOffsetX = -4               //x-Offset Skalenbeschriftung
+    var textOffsetX = -4;              //x-Offset Skalenbeschriftung
     var textOffsetY = -5;             //y-Offset Skalenbeschriftung
     var breiteSollbereich = 10;        //Dicke der Anzeige Sollbereich
     var breiteIstBalken = Math.round(param.breite * 0.8);
@@ -353,7 +353,7 @@ VISU.AnzeigeBalken = function(param) {
         ctx.stroke();
         
         ctx.restore();
-    }    
+    };
 };
 
 VISU.AnzeigeBalken.erzeugeAnzeige = function(param) {
@@ -1070,7 +1070,7 @@ VISU.Layer = function(param){
                 e.preventDefault();
                 document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null;
                 magnet();
-            }
+            };
         };
     }
 };
@@ -1205,7 +1205,7 @@ VISU.zeichneForm = function(id,p) {
         rg = p.radialGradient;
         radgrad = ctx.createRadialGradient(rg.x1, rg.y1, rg.r1, rg.x2, rg.y2, rg.r2);
         for (elem in p.colorStops) {
-            radgrad.addColorStop(p.colorStops[elem].r, p.colorStops[elem].s)
+            radgrad.addColorStop(p.colorStops[elem].r, p.colorStops[elem].s);
         }
         ctx.fillStyle = radgrad;
         fill = true;
@@ -1215,7 +1215,7 @@ VISU.zeichneForm = function(id,p) {
             lg = p.linearGradient;
             lingrad = ctx.createLinearGradient(lg.x1, lg.y1, lg.x2, lg.y2);
             for (elem in p.colorStops) {
-                lingrad.addColorStop(p.colorStops[elem].x, p.colorStops[elem].s)
+                lingrad.addColorStop(p.colorStops[elem].x, p.colorStops[elem].s);
             }
             ctx.fillStyle = lingrad;
             fill = true;
@@ -1449,7 +1449,7 @@ VISU.AnzeigeScroller = function(param) {
             tKommen: '00:00',
             tSchlafen: '00:00',
             wtag: i2
-        }
+        };
         i2 = i2 < 7 ? i2 : 0;
     }
     this.weckerEin = false;
@@ -1498,7 +1498,7 @@ VISU.AnzeigeScroller = function(param) {
                 strokeStyle: 'rgba(255,255,255,0.7)',
                 fillStyle: 'rgba(255,255,255,0.05)',
                 lineWidth: 0.5
-            })
+            });
             
             self.ctx.fillStyle = 'rgba(255,255,255,0.3)';
             
@@ -1648,7 +1648,7 @@ VISU.AnzeigeScroller = function(param) {
                 strokeStyle: 'rgba(255,255,255,0.5)',
                 fillStyle: 'rgba(255,255,255,0.05)',
                 lineWidth: 0.5
-            })
+        });
        
        self.ctx.restore();
        
@@ -1872,15 +1872,15 @@ VISU.AnzeigeUhr = function(id, typ) {
         var datum = tage[woTag] + ", " + vortag + tag + vormon + monat + "." + jahr;
         var uhrzeit = vorstd + stunden + vormin + minuten + vorsek + sekunden; 
         self.element.innerHTML = ((typ == 'datum') ? datum : uhrzeit);
-    }
+    };
 };
 
 VISU.AnzeigeUhr.erzeugeDigiUhr = function(id) {
-    return new VISU.AnzeigeUhr(id, 'uhr')
+    return new VISU.AnzeigeUhr(id, 'uhr');
 };
 
 VISU.AnzeigeUhr.erzeugeDatum = function(id) {
-    return new  VISU.AnzeigeUhr(id, 'datum')
+    return new  VISU.AnzeigeUhr(id, 'datum');
 };
 
 
@@ -1900,7 +1900,7 @@ VISU.AnzeigeMeldeBox = function(param) {
             gekommen: "",
             gegangen: "",
             status: 0
-        }
+        };
     }
     
     this.aktualisiere = function() {
@@ -1954,7 +1954,7 @@ VISU.AnzeigeMeldeBox = function(param) {
                             self.ctx.fillStyle = 'rgba(255,255,255,0.3)';
                     }
                     
-                    sp5txt = (self.data[i].gegangen != '01.01.70, 00:00' ? self.data[i].gegangen : '')
+                    sp5txt = (self.data[i].gegangen != '01.01.70, 00:00' ? self.data[i].gegangen : '');
                     
                     //Statustext
                     switch (self.data[i].status) {
@@ -1989,7 +1989,7 @@ VISU.AnzeigeMeldeBox = function(param) {
                 }
             }
         }
-    }
+    };
 };
 
 VISU.AnzeigeMeldeBox.erzeugeBox = function(param) {
@@ -2011,7 +2011,7 @@ VISU.AnzeigeLogbuch = function(param) {
             zeit: "",
             id: 0,
             status: 0
-        }
+        };
     }
     
     this.aktualisiere = function() {
@@ -2084,7 +2084,7 @@ VISU.AnzeigeLogbuch = function(param) {
 
             }
         }  
-    }
+    };
 };
 
 VISU.AnzeigeLogbuch.erzeuge = function(param) {

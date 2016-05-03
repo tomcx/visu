@@ -8,7 +8,7 @@
 VISU.init.starten = function() {
     
     //Kontextmenü deaktivieren
-    document.body.oncontextmenu = function() {return false};
+    document.body.oncontextmenu = function() {return false;};
 
     //Module initialisieren
     VISU.init.bild();
@@ -39,11 +39,7 @@ VISU.init.starten = function() {
     hideAddressBar();
     window.addEventListener("orientationchange", hideAddressBar ); 
     
-    //Polling starten
-    VISU.anzeig.visinfo.data = 'Warte auf Daten ...';
-    VISU.comm.pollZyk1();
-    setTimeout(VISU.comm.pollZyk5 ,500); //0,5s versetzt starten
-    VISU.sonst.warteAufDaten();
+    
 };
 
 window.onload = VISU.init.starten;

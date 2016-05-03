@@ -152,4 +152,4 @@ VISU.init.meldtxt = function() {
         }
     };
     
-}
+};

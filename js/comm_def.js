@@ -13,10 +13,8 @@ VISU.init.comm_def = function() {
     //Variablenliste für Wohnungsanzeige
     VISU.comm.varRdWohnung = {
        // Parameter für Lesen
-       //fld: 'M',
-       //addr: 0,
        addr: '%MB0',
-       debug: true,
+       //debug: true,
        oc: VISU.anzeig.aktualAnzeig,
        id: 1,
        items:[{
@@ -426,7 +424,7 @@ VISU.init.comm_def = function() {
                 addr: 138
             } 
         ]
-    }
+    };
     
    
     //Variablenliste für Lesen der Rolloanwahlen
@@ -476,7 +474,7 @@ VISU.init.comm_def = function() {
                 type: 'BOOL'
             }
         ]
-    }
+    };
     
     //Variablenliste für Schreiben der Rolloanwahlen
     VISU.comm.varWrRolloAnw = {
@@ -524,7 +522,7 @@ VISU.init.comm_def = function() {
                 type: 'BOOL'
             }
         ]
-    }
+    };
     
     //Variablenliste für Lesen der Raumwerte
     VISU.comm.varRdRaumWerte = {
@@ -577,7 +575,7 @@ VISU.init.comm_def = function() {
                 type: 'INT1DP'
             }
         ]
-    }
+    };
     
     //Variablenliste für Lesen der Heizungsdaten
     VISU.comm.varRdHeizung = {
@@ -648,7 +646,7 @@ VISU.init.comm_def = function() {
                 type: 'BOOL'
             }
         ]
-    }
+    };
     
     //Variablenliste für Lesen der allgemeinen Einstellungen
     VISU.comm.varRdEinstell = {
@@ -683,7 +681,7 @@ VISU.init.comm_def = function() {
                 type: 'BOOL',
             }
         ]
-    }
+    };
     
     //Variablenliste für Lesen der personenbez. Daten
     VISU.comm.varRdPersonalData = {
@@ -759,7 +757,7 @@ VISU.init.comm_def = function() {
                 addr: 1864
             }
         ]
-    }
+    };
     
     /*
      * Strukturdefinitionen
@@ -780,22 +778,22 @@ VISU.init.comm_def = function() {
         tGehen: 'TOD.#hh#:#mm',
         tKommen: 'TOD.#hh#:#mm',
         tSchlafen: 'TOD.#hh#:#mm'
-    }
+    };
     
     //Strukturdefinition Events (Meldungen, Alarme usw.)
     VISU.comm.defEvent = {
         gekommen: 'DT.#DD#.#MM#.#YY#, #hh#:#mm',
         gegangen: 'DT.#DD#.#MM#.#YY#, #hh#:#mm',
         status: 'BYTE'
-    }
+    };
     
     //Strukturdefinition Eventlog (Meldungen, Alarme usw.)
     VISU.comm.defLog = {
         zeit: 'DT.#DD#.#MM#.#YY#, #hh#:#mm',
         id: 'BYTE',
         status: 'BYTE'
-    }
+    };
     
- }
+ };
 
  

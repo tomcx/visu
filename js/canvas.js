@@ -198,9 +198,9 @@ VISU.init.canvas = function() {
             label: 'N a c h t b e t r i e b'
         }
 
-    }
+    };
 
-}
+};
 
 
 

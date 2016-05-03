@@ -21,7 +21,7 @@ VISU.init.comm_funkt = function() {
         VISU.anzeig.widg.datum.aktualisiere();
         window.setTimeout("VISU.comm.pollZyk1()", 1000);
         
-    }
+    };
     
     //Schleife für zusätzl. zykl. Abfrage azykl. ausgelesener Variablen und
     //der Variablen für Widgets, Takt 5s
@@ -44,7 +44,7 @@ VISU.init.comm_funkt = function() {
         VISU.comm.pollSonnenZeiten();
         
         window.setTimeout("VISU.comm.pollZyk5()", 5000);
-    }
+    };
     
     
     //Daten für Zeitleiste auslesen
@@ -60,34 +60,34 @@ VISU.init.comm_funkt = function() {
                 VISU.anzeig.pers.zeitLeiste.draw();
             }
         });
-    }
+    };
     
     //Rolloanwahlen lesen
     VISU.comm.pollRolloAnw = function() {
         VISU.comm.cx.readReq(VISU.comm.varRdRolloAnw);
-    }
+    };
     
     //Raumwerte lesen
     VISU.comm.pollRaumWerte = function() {
         VISU.comm.cx.readReq(VISU.comm.varRdRaumWerte);
-    }
+    };
     
     //Personenbez. Daten lesen
     VISU.comm.pollPersDaten = function() {
         VISU.comm.cx.readReq(VISU.comm.varRdPersonalData);
         VISU.comm.pollZeiten4W();
-    }
+    };
     
     //Heizungsdaten lesen
     VISU.comm.pollHeizung = function() {
         VISU.comm.cx.readReq(VISU.comm.varRdHeizung);
         VISU.comm.cx.readArrayOfByte({name: '.VQ_STELLANTRSTATUS', jvar: 'VISU.anzeig.fbh.hk.status'});
-    }
+    };
     
     //Einstellungen lesen
     VISU.comm.pollEinstell = function() {
         VISU.comm.cx.readReq(VISU.comm.varRdEinstell);
-    }
+    };
     
     //Tages-/Wochenpreset schreiben
     VISU.comm.sendPreset = function(preset, tagesIndex) {
@@ -107,7 +107,7 @@ VISU.init.comm_funkt = function() {
                 }
             ]
         });
-    }
+    };
     
     //Zeiteinstellungen für Schaltpunkt lesen
     VISU.comm.pollZeitEinstell = function() {
@@ -148,7 +148,7 @@ VISU.init.comm_funkt = function() {
                 }
             ]
         });
-    }
+    };
     
     //Eventliste für Meldebox lesen (Widget)
     VISU.comm.pollEvents = function() {
@@ -161,7 +161,7 @@ VISU.init.comm_funkt = function() {
             //debug: true,
             oc: VISU.anzeig.widg.meldeBox.aktualisiere
         });
-    }
+    };
     
     //Logbuch lesen
     VISU.comm.pollLog = function() {
@@ -174,7 +174,7 @@ VISU.init.comm_funkt = function() {
             //debug: true,
             oc: VISU.anzeig.log.anzeige.aktualisiere
         });
-    }
+    };
     
     //Außentemp. lesen (Widget)
     VISU.comm.pollAussenTemp = function() {
@@ -209,7 +209,7 @@ VISU.init.comm_funkt = function() {
                 }
             ]
         });
-    }
+    };
     
     //Personenstatus lesen (Widget)
     VISU.comm.pollPersonenStatus = function(){
@@ -236,7 +236,7 @@ VISU.init.comm_funkt = function() {
                 }
             ]
         });
-    }
+    };
     
     //Sonnenzeiten lesen (Widget)
     VISU.comm.pollSonnenZeiten = function() {
@@ -257,5 +257,5 @@ VISU.init.comm_funkt = function() {
                 }
             ]
         });
-    }
-}    
+    };
+};

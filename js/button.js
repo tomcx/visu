@@ -262,7 +262,7 @@ VISU.init.button = function() {
                 ('heiz9', VISU.comm.cx.writeBool, {addr:'%MB10608',val:0}, {addr:'%MB10608',val:1}),
         }
              
-	}
+	};
     
     //Buttontexte für dynam. Änderung
     VISU.buttontext = {
@@ -340,13 +340,13 @@ VISU.init.button = function() {
         },
         
         
-    }
+    };
 
     //Aktualisiere Rolloanwahlen nach Lesen der Daten
     VISU.button.aktualAnzeig = function() {
         VISU.anzeig.aktualisiere(VISU.button.rolloAnw);
         VISU.anzeig.aktualisiere(VISU.button.raumfunkt);
         VISU.anzeig.aktualisiere(VISU.button.pers);
-    }
+    };
 
-}
+};

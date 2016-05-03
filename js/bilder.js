@@ -70,7 +70,5 @@ VISU.init.bild = function() {
         pers2kl: VISU.erzeugeBildObjekt('pers2_kl.png'),
         pers3kl: VISU.erzeugeBildObjekt('pers3_kl.png'),
         pers4kl: VISU.erzeugeBildObjekt('pers4_kl.png'),
-    
-    
-    }
-}
+    };
+};

@@ -98,11 +98,11 @@ VISU.init.sonst = function() {
                     ]
                 });
                
-        }
+        };
         
         VISU.anzeig.pers.einstStd.data = VISU.fixVkStellen(stunde, 2);
         VISU.anzeig.pers.einstMin.data = VISU.fixVkStellen(minute, 2);
-    }
+    };
  
     
     VISU.sonst.oeffneZeitEinstellung = function(tagesIndex) {
@@ -112,7 +112,7 @@ VISU.init.sonst = function() {
         if (!VISU.layer.zeiteinst.eingeblendet) {
             VISU.layer.zeiteinst.blendeEin();
         }   
-    }
+    };
     
     
     VISU.sonst.oeffnePresets = function(p) {
@@ -140,7 +140,7 @@ VISU.init.sonst = function() {
                 break;
         }
         
-    }
+    };
     
     
     VISU.sonst.raumwahl = function(raum) {
@@ -174,7 +174,7 @@ VISU.init.sonst = function() {
             
         }
         else VISU.sonst.alert('Raumbedienung von anderem Terminal geöffnet !');
-    }
+    };
     
     
     VISU.sonst.waehleMenuePunkt = function(punkt) {
@@ -245,7 +245,7 @@ VISU.init.sonst = function() {
                 VISU.layer.fbh.blendeEin();
                 break;
         }
-    }
+    };
         
         
     VISU.sonst.rolloSchnellw = function(anw) {
@@ -260,13 +260,13 @@ VISU.init.sonst = function() {
                 VISU.comm.varWrRolloAnw.items[i].val = true;
         }
         VISU.comm.cx.writeReq(VISU.comm.varWrRolloAnw);
-    }
+    };
     
     
     VISU.sonst.aenderePersBild = function() {
         //console.log(VISU.bild['pers' + VISU.anzeig.pers.index].src);
         document.getElementById('persbild').src = VISU.bild['pers' + VISU.anzeig.pers.index].src;
-    }
+    };
     
     
     //Datenabfrage nach Initialisierung
@@ -276,7 +276,7 @@ VISU.init.sonst = function() {
         }
         else
             VISU.layer.visinfo.blendeAus();
-    }
+    };
     
     //Ausgabe von Visuinfos
     VISU.sonst.alert = function(text) {
@@ -284,6 +284,6 @@ VISU.init.sonst = function() {
         VISU.layer.visinfo.blendeEin();
         VISU.layer.visinfo.element.style.cursor = 'pointer';
         VISU.layer.visinfo.element.onmousedown = VISU.layer.visinfo.blendeAus;
-    }
+    };
 
-}
+};

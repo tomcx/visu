@@ -14,9 +14,16 @@ VISU.init.comm = function() {
             serviceUrl: window.location.href.replace(/visu\/main\.html/,'/TcAdsWebService/TcAdsWebService.dll'),
             amsNetId: '5.2.52.54.1.1',
             //amsNetId: '192.168.1.2.1.1',
-            dataAlign4: true
+            dataAlign4: true,
+            onReady: function() {
+                //Polling starten
+                VISU.anzeig.visinfo.data = 'Warte auf Daten ...';
+                VISU.comm.pollZyk1();
+                setTimeout(VISU.comm.pollZyk5 ,500); //0,5s versetzt starten
+                VISU.sonst.warteAufDaten();
+            }
         })
-    }
+    };
     
-}
+};
 

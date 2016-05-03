@@ -56,12 +56,12 @@ VISU.init.anzeig = function() {
         steckd: {
             kz:    $b.erzeugeSteckd('kz_steckd'),
             sz: {
-              kr1: $b.erzeugeSteckd1('sz_steckd'),
-              kr2: $b.erzeugeSteckd2('sz_steckd'),
+              kr1: $b.erzeugeSteckd1('sz_steckd1'),
+              kr2: $b.erzeugeSteckd2('sz_steckd2'),
             },
             wz: {
-              kr1: $b.erzeugeSteckd1('wz_steckd'),
-              kr2: $b.erzeugeSteckd2('wz_steckd'),
+              kr1: $b.erzeugeSteckd1('wz_steckd1'),
+              kr2: $b.erzeugeSteckd2('wz_steckd2'),
             },
             kb:    $b.erzeugeSteckd('kb_steckd'),
             fl:    $b.erzeugeSteckd('fl_steckd'),
@@ -212,7 +212,7 @@ VISU.init.anzeig = function() {
                         oc: function() {
                             VISU.comm.pollEvents();
                         }
-                    })
+                    });
                 }
             }),
             aussenTempChart: $c.erzeugeAnzeige({
@@ -309,7 +309,7 @@ VISU.init.anzeig = function() {
         },
         //Visu Systeminfo
         visinfo: VISU.erzeugeTextAnzeige('visinfo_txt'),
-    }
+    };
  
     //Funktion zu Aktualisieren von Binär- und Rolloanzeigen
     VISU.anzeig.aktualisiere = function(anzeig) {
@@ -326,7 +326,7 @@ VISU.init.anzeig = function() {
                 }
             }
         }
-    }
+    };
 
     //Aktualisiere Anzeigen nach Lesen der Daten
     VISU.anzeig.aktualAnzeig = function() {
@@ -335,7 +335,7 @@ VISU.init.anzeig = function() {
         VISU.anzeig.aktualisiere(VISU.anzeig.rollo);
         VISU.anzeig.aktualisiere(VISU.anzeig.licht);
         VISU.anzeig.aktualisiere(VISU.anzeig.steckd);
-    }
-}
+    };
+};
  
 
